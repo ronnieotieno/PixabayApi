@@ -1,5 +1,6 @@
 package com.ronnie.presenatation
 
+import android.annotation.SuppressLint
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.widget.ImageView
@@ -28,10 +29,11 @@ object DataBinder {
             }
         }
 
+    @SuppressLint("SetTextI18n") //Its just adding "#" and don't need any translation
     @JvmStatic
     @BindingAdapter("modelTags")
     fun modelTags(textView: TextView, tags:String){
-        val tagList = tags.replace(" ", " #")
+        val tagList = tags.replace(", ", ", #")
         textView.text = "#${tagList}"
     }
 

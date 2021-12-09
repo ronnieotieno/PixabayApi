@@ -47,13 +47,14 @@
                 android:layout_width="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/tags"
-                android:ellipsize="end"
-                android:maxLines="1"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
                 modelTags="@{image.tags}"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

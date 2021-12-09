@@ -26,6 +26,7 @@ class ImagesAdapter(private val clicked: (String) -> Unit) :
         fun bindPlayer(imagePassed: Image) {
             binding.apply {
                 setImage(imagePassed)
+                tags.isSelected = true
                 root.setOnClickListener {
                     clicked.invoke("")
                 }
