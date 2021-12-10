@@ -29,6 +29,16 @@ object DataBinder {
             }
         }
 
+    @JvmStatic
+    @BindingAdapter("imageNormal")
+    fun setImageNormally(imageView: ImageView, imageUrl: String){
+        imageView.apply{
+            Glide.with(this.context)
+                .load(imageUrl)
+                .into(this)
+        }
+    }
+
     @SuppressLint("SetTextI18n") //Its just adding "#" and don't need any translation
     @JvmStatic
     @BindingAdapter("modelTags")

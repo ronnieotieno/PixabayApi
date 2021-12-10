@@ -3,14 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <data>
+        <variable
+            name="image"
+            type="com.ronnie.domain.Image" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/black"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/toolbar"
+            android:background="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
+
         <ImageView
             android:layout_width="match_parent"
-            android:src="@drawable/fruit"
+            tools:src="@drawable/fruit"
+            android:id="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:transitionName="imageView"
             android:layout_height="match_parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,8 +42,8 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{image.user}"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:text="Ronnie Otieno"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +53,8 @@
                 android:id="@+id/tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                modelTags="@{image.tags}"
                 android:fontFamily="sans-serif-condensed"
-                android:text="#fruits, #love, #yes,#fruits"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -46,22 +63,21 @@
                 android:id="@+id/likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_favorite"
                 android:drawablePadding="5dp"
-                android:text="10"
+                android:text="@{String.valueOf(image.likes)}"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tags" />
+                app:layout_constraintTop_toBottomOf="@id/tags"
+                app:drawableStartCompat="@drawable/ic_favorite" />
 
             <TextView
                 android:id="@+id/comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:drawableStart="@drawable/ic_comment"
                 android:drawablePadding="5dp"
-                android:text="10"
+                android:text="@{String.valueOf(image.comments)}"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/likes"
@@ -72,13 +88,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:drawableStart="@drawable/ic_download"
                 android:drawablePadding="5dp"
-                android:text="10"
+                android:text="@{String.valueOf(image.downloads)}"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/comments"
-                app:layout_constraintTop_toBottomOf="@id/tags" />
+                app:layout_constraintTop_toBottomOf="@id/tags"
+                app:drawableStartCompat="@drawable/ic_download" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

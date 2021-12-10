@@ -3,12 +3,13 @@ package com.ronnie.presenatation
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ronnie.domain.Image
 import com.ronnie.presenatation.databinding.ImageItemBinding
 import kotlin.random.Random
 
-class ImagesAdapter(private val clicked: (String) -> Unit) :
+class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
     RecyclerView.Adapter<ImagesAdapter.OrdersViewHolder>() {
 
     private val imagesList = ArrayList<Image>()
@@ -25,10 +26,10 @@ class ImagesAdapter(private val clicked: (String) -> Unit) :
 
         fun bindPlayer(imagePassed: Image) {
             binding.apply {
-                setImage(imagePassed)
+                image = imagePassed
                 tags.isSelected = true
                 root.setOnClickListener {
-                    clicked.invoke("")
+                    clicked.invoke(imagePassed,imageView)
                 }
             }
         }

@@ -15,8 +15,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/imageView"
             android:layout_width="0dp"
+            android:transitionName="@{image.largeImageURL}"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
             imageFromUrl="@{image.largeImageURL}"
