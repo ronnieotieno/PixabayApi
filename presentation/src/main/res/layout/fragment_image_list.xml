@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="mainViewModel"
+            type="com.ronnie.presenatation.MainViewModel" />
 
     </data>
 
@@ -13,28 +16,51 @@
         android:layout_height="match_parent"
         tools:context=".MainImageActivity">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:drawableTint="@android:color/tertiary_text_dark"
-                    android:outlineProvider="bounds"
-                    android:elevation="2dp"
-                    android:background="@null"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawableEnd="@drawable/ic_close"
-                    android:drawablePadding="5dp"
-                    android:focusableInTouchMode="true"
-                    android:hint="Search"
-                    android:imeOptions="actionSearch"
-                    android:padding="15dp"
-                    android:singleLine="true"
-                    android:textSize="17sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:outlineProvider="bounds"
+            android:elevation="2dp"
+            android:id="@+id/searchContainer"
+            android:layout_marginStart="4dp"
+            android:background="@null"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/cancel_search"
+                android:layout_marginEnd="15dp"
+                android:visibility="gone"
+                android:background="?selectableItemBackground"
+                app:layout_constraintStart_toEndOf="@+id/searchView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/searchView"
+                app:layout_constraintBottom_toBottomOf="@+id/searchView"
+                android:src="@drawable/ic_close"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/cancel_search"
+                android:background="@null"
+                android:drawableTint="@android:color/tertiary_text_dark"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:focusableInTouchMode="true"
+                android:hint="Search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list"
@@ -46,13 +72,12 @@
                     android:paddingEnd="@dimen/item_margin"
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="@dimen/item_margin"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/searchView"
-                    app:spanCount="2"
+                    app:layout_constraintTop_toBottomOf="@+id/searchContainer"
                     tools:listitem="@layout/image_item" />
 
         <ProgressBar
             android:layout_width="wrap_content"
+            android:id="@+id/progress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"

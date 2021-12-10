@@ -24,6 +24,9 @@
         <ImageView
             android:layout_width="match_parent"
             tools:src="@drawable/fruit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             android:id="@+id/imageView"
             android:layout_height="match_parent" />
@@ -62,6 +65,7 @@
                 android:id="@+id/likes"
                 app:layout_constraintTop_toBottomOf="@id/tags"
                 android:textColor="@color/white"
+                android:layout_marginTop="10dp"
                 android:drawablePadding="5dp"
                 android:text="@{String.valueOf(image.likes)}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tags"
                 android:textColor="@color/white"
                 android:drawablePadding="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="@{String.valueOf(image.comments)}"
                 app:layout_constraintEnd_toStartOf="@+id/likes"
@@ -88,6 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tags"
                 android:textColor="@color/white"
                 android:drawablePadding="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="@{String.valueOf(image.downloads)}"
                 app:layout_constraintEnd_toStartOf="@+id/comments"
