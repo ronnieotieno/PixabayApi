@@ -1,53 +1,60 @@
 package com.ronnie.presenatation
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ronnie.domain.Image
 import com.ronnie.presenatation.databinding.ImageItemBinding
-import kotlin.random.Random
 
 class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
-    RecyclerView.Adapter<ImagesAdapter.OrdersViewHolder>() {
+    PagingDataAdapter<Image, ImagesAdapter.ImageViewHolder>(imageDiffCallback) {
 
-    private val imagesList = ArrayList<Image>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setImages(list: List<Image>) {
-        imagesList.clear()
-        imagesList.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    inner class OrdersViewHolder(private val binding: ImageItemBinding) :
+    inner class ImageViewHolder(private val binding: ImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPlayer(imagePassed: Image) {
+        fun bind(imagePassed: Image) {
             binding.apply {
                 image = imagePassed
                 tags.isSelected = true
                 root.setOnClickListener {
-                    clicked.invoke(imagePassed,imageView)
+                    clicked.invoke(imagePassed, imageView)
                 }
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
-        return OrdersViewHolder(
-           ImageItemBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
+        return ImageViewHolder(
+            ImageItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) {
-        holder.bindPlayer(imagesList[position])
+    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+        val data = getItem(position)!!
+
+        holder.bind(data)
     }
 
-    override fun getItemCount(): Int {
-        return imagesList.size
+    override fun getItemViewType(position: Int): Int {
+        return if (position == itemCount) {
+            NETWORK_VIEW_TYPE
+        } else {
+            IMAGE_VIEW_TYPE
+        }
+    }
+}
+
+private val imageDiffCallback = object : DiffUtil.ItemCallback<Image>() {
+    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
+        return oldItem == newItem
     }
 }

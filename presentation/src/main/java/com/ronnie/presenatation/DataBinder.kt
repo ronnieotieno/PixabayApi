@@ -23,21 +23,10 @@ object DataBinder {
                 Glide.with(imageView.context)
                     .load(imageUrl)
                     .placeholder(progress)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageView)
             }
         }
-
-    @JvmStatic
-    @BindingAdapter("imageNormal")
-    fun setImageNormally(imageView: ImageView, imageUrl: String){
-        imageView.apply{
-            Glide.with(this.context)
-                .load(imageUrl)
-                .into(this)
-        }
-    }
 
     @SuppressLint("SetTextI18n") //Its just adding "#" and don't need any translation
     @JvmStatic

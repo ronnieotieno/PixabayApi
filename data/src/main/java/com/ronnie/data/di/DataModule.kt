@@ -2,6 +2,8 @@ package com.ronnie.data.di
 
 import com.ronnie.data.BuildConfig
 import com.ronnie.data.api.PixaBayApi
+import com.ronnie.data.repository.SearchImagesRepositoryImpl
+import com.ronnie.domain.repositories.SearchImagesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +20,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-    private val tag = DataModule.javaClass.simpleName
     private val loggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
@@ -45,6 +46,10 @@ object DataModule {
     @Provides
     @Singleton
     fun providesApi(retrofit: Retrofit):PixaBayApi= retrofit.create(PixaBayApi::class.java)
+
+    @Provides
+    @Singleton
+    fun providesRepository(pixaBayApi: PixaBayApi):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi)
 
     private val apiInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()

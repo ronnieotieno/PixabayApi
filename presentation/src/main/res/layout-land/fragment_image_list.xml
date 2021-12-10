@@ -51,6 +51,7 @@
                     android:clipToPadding="false"
                     android:nestedScrollingEnabled="false"
                     android:padding="@dimen/item_margin"
+                    android:paddingBottom="?actionBarSize"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/searchView"
                     app:spanCount="3"

@@ -12,14 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainImageActivity">
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/searchView"
@@ -49,15 +41,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
+                    android:paddingBottom="?actionBarSize"
+                    android:paddingTop="@dimen/item_margin"
+                    android:paddingEnd="@dimen/item_margin"
                     android:nestedScrollingEnabled="false"
-                    android:padding="@dimen/item_margin"
+                    android:paddingStart="@dimen/item_margin"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/searchView"
                     app:spanCount="2"
                     tools:listitem="@layout/image_item" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
             android:layout_width="wrap_content"

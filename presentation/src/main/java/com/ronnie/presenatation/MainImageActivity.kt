@@ -15,8 +15,6 @@ class MainImageActivity : AppCompatActivity() {
 
     }
 
-
-
     override fun onBackPressed() {
         super.onBackPressed()
        changeStatusBar(true)
