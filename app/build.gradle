@@ -42,6 +42,8 @@ android {
 
 dependencies {
 
+	def room = "2.4.0-rc01"
+
 	implementation 'androidx.core:core-ktx:1.7.0'
 	implementation 'androidx.appcompat:appcompat:1.4.0'
 	implementation 'com.google.android.material:material:1.4.0'
@@ -58,4 +60,9 @@ dependencies {
 	implementation "com.github.bumptech.glide:glide:$glide_version"
 	annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
+	//Room Database
+	implementation "androidx.room:room-runtime:$room"
+	implementation "androidx.room:room-ktx:$room"
+	implementation "androidx.room:room-paging:$room"
+	kapt "androidx.room:room-compiler:$room"
 }

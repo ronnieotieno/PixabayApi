@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,10 +27,14 @@ import com.ronnie.domain.Image
 import com.ronnie.presenatation.databinding.FragmentImageListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     private lateinit var binding:FragmentImageListBinding
@@ -74,16 +79,15 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             }
         }
         binding.list.layoutManager = gridLayoutManager
+        binding.list.adapter = adapter
         binding.list.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { retry() }
         )
 
-        binding.list. setHasFixedSize(true)
-
         adapter.addLoadStateListener { state ->
-            binding.progress.isVisible = state.refresh is LoadState.Loading
+            binding.progress.isVisible = state.mediator?.refresh is LoadState.Loading
 
-            if (state.refresh is LoadState.Error) {
+            if (state.mediator?.refresh is LoadState.Error) {
 
             }
         }
@@ -94,13 +98,14 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         searchImages(viewModel.currentSearch)
         binding.searchView.setText(viewModel.currentSearch)
     }
+
     private fun searchImages(searchString: String, isUserInitiated:Boolean = false) {
         job?.cancel()
         job = viewLifecycleOwner.lifecycleScope.launch{
             viewModel.currentSearch = searchString
             if(isUserInitiated) adapter.submitData(PagingData.empty())
-            viewModel.searchImages(searchString).collectLatest { data ->
-                adapter.submitData(data)
+            viewModel.searchImages(searchString).collectLatest {
+                adapter.submitData(it)
             }
         }
     }

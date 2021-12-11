@@ -1,12 +1,15 @@
 package com.ronnie.data.di
 
+import android.content.Context
 import com.ronnie.data.BuildConfig
 import com.ronnie.data.api.PixaBayApi
+import com.ronnie.data.db.PixaBayRoomDb
 import com.ronnie.data.repository.SearchImagesRepositoryImpl
 import com.ronnie.domain.repositories.SearchImagesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -49,7 +52,13 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesRepository(pixaBayApi: PixaBayApi):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi)
+    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb)
+
+    @Provides
+    @Singleton
+    fun providesDB(@ApplicationContext appContext: Context): PixaBayRoomDb {
+        return PixaBayRoomDb.invoke(appContext)
+    }
 
     private val apiInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
