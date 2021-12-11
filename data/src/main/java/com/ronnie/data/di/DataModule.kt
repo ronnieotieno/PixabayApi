@@ -55,7 +55,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi)
+    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb)
 
     @Provides
     @Singleton

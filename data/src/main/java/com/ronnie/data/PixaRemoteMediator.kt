@@ -27,7 +27,6 @@ class PixaRemoteMediator(
                 }
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
-
                     val prevKey = remoteKeys?.prevPage
                         ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                     prevKey
@@ -41,7 +40,7 @@ class PixaRemoteMediator(
         }
 
         try {
-            val response = pixaBayApi.searchImages(searchString,state.config.initialLoadSize, page)
+            val response = pixaBayApi.searchImages(searchString,state.config.pageSize, page)
             val images = response.images
 
             images.map {
