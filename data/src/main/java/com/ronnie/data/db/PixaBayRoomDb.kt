@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Database(
     entities = [Image::class, RemoteKey::class],
-    version = 1, exportSchema = false
+    version = 4, exportSchema = false
 )
 @Singleton
 abstract class PixaBayRoomDb : RoomDatabase() {

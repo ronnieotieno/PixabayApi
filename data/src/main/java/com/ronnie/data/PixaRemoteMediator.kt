@@ -1,5 +1,6 @@
 package com.ronnie.data
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -13,7 +14,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
 
-@ExperimentalPagingApi
+@OptIn(ExperimentalPagingApi::class)
 class PixaRemoteMediator(
     private val pixaBayApi: PixaBayApi,
     private val searchString: String,
@@ -22,19 +23,22 @@ class PixaRemoteMediator(
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Image>): MediatorResult {
         val page: Int = when (loadType) {
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextPage?.minus(1) ?: 1
-            }
+                LoadType.REFRESH -> {
+                    val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                    remoteKeys?.nextPage?.minus(1) ?: 1
+                }
+                LoadType.PREPEND -> {
+                    val remoteKeys = getRemoteKeyForFirstItem(state)
 
-            LoadType.PREPEND -> {
-                return MediatorResult.Success(true)
-            }
-
-            LoadType.APPEND -> {
-                val remoteKeys = getRemoteKeyForLastItem(state)
-                    ?: throw InvalidObjectException("Result is empty")
-                remoteKeys.nextPage ?: return MediatorResult.Success(true)
+                    val prevKey = remoteKeys?.prevPage
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                    prevKey
+                }
+                LoadType.APPEND -> {
+                    val remoteKeys = getRemoteKeyForLastItem(state)
+                    val nextKey = remoteKeys?.nextPage
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                    nextKey
             }
         }
 
@@ -47,20 +51,17 @@ class PixaRemoteMediator(
             }
 
             val endOfPaginationReached = images.isEmpty()
-
+            db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    db.withTransaction {
-                        db.remoteKeyDao().clearRemoteKeys()
-                        db.imageDao().clearAll()
-                    }
+                    db.imageDao().clearAll()
+                    db.remoteKeyDao().clearRemoteKeys()
                 }
                val prevKey = if (page == 1) null else page - 1
                val  nextKey = if (endOfPaginationReached) null else page + 1
 
                val keys = images.map {
-                    RemoteKey(id= it.id, prevPage = prevKey, nextPage = nextKey)
+                    RemoteKey(prevPage = prevKey, nextPage = nextKey, imageId = it.id)
                 }
-            db.withTransaction {
                 db.remoteKeyDao().insertAll(keys)
                 db.imageDao().insertAll(images)
             }
@@ -79,17 +80,15 @@ class PixaRemoteMediator(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Image>): RemoteKey? {
-        return state.lastItemOrNull()?.let { image ->
-                db.withTransaction {
-                    db.remoteKeyDao().remoteKeysImageId(image.id)
-                }
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
+            ?.let { image ->
+                db.remoteKeyDao().remoteKeysImageId(image.id)
             }
     }
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Image>): RemoteKey? {
-        return state.firstItemOrNull()?.let { image ->
-                db.withTransaction {
-                    db.remoteKeyDao().remoteKeysImageId(image.id)
-                }
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
+            ?.let { image ->
+                db.remoteKeyDao().remoteKeysImageId(image.id)
             }
     }
 
@@ -98,9 +97,7 @@ class PixaRemoteMediator(
     ): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.let { image ->
-                db.withTransaction {
                     db.remoteKeyDao().remoteKeysImageId(image.id)
-                }
             }
         }
     }

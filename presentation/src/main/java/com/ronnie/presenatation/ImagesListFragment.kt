@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@ExperimentalPagingApi
 @AndroidEntryPoint
 class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     private lateinit var binding:FragmentImageListBinding
@@ -52,7 +51,8 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         binding = FragmentImageListBinding.bind(view)
         setSearchViewListener()
         setUpAdapter()
-        if(!isInitiated) init()
+      //  if(!isInitiated)
+            init()
 
     }
 

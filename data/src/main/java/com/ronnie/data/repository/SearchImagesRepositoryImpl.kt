@@ -13,14 +13,15 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SearchImagesRepositoryImpl @Inject constructor(private val pixaBayApi: PixaBayApi, private val pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository {
-    @ExperimentalPagingApi
+    @OptIn(ExperimentalPagingApi::class)
     override fun searchImages(searchString: String): Flow<PagingData<Image>> {
         val dbQuery = "%${searchString.replace(' ', '%')}%"
         val pagingSourceFactory = { pixaBayRoomDb.imageDao().queryImages(dbQuery) }
             return Pager(
                 config = PagingConfig(
                     pageSize = 25,
-                    initialLoadSize = 50,
+                    prefetchDistance = 10 ,
+                    initialLoadSize = 25,
                     enablePlaceholders = false
                 ),
                 remoteMediator = PixaRemoteMediator(
