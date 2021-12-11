@@ -1,5 +1,6 @@
 package com.ronnie.data.di
 
+import android.app.Application
 import android.content.Context
 import com.ronnie.data.BuildConfig
 import com.ronnie.data.api.PixaBayApi
@@ -11,11 +12,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -28,9 +29,11 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(): OkHttpClient {
+    fun providesOkHttpClient(cache:Cache): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(apiInterceptor)
+            .addInterceptor (cacheInterceptor)
+            .cache(cache)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -52,7 +55,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb)
+    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi)
 
     @Provides
     @Singleton
@@ -70,5 +73,23 @@ object DataModule {
             request.url(url)
             chain.proceed(request.build())
         }
+
+    private val cacheInterceptor = Interceptor { chain ->
+        val response: Response = chain.proceed(chain.request())
+        val cacheControl = CacheControl.Builder()
+            .maxAge(30, TimeUnit.DAYS)
+            .build()
+        response.newBuilder()
+            .header("Cache-Control", cacheControl.toString())
+            .build()
+    }
+    @Provides
+    @Singleton
+    fun provideCache(app: Application): Cache {
+        return Cache(
+            File(app.applicationContext.cacheDir, "pixabay_cache"),
+            10485760L
+        )
+    }
 
 }

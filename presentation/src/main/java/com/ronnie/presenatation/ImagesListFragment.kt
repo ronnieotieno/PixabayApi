@@ -85,9 +85,9 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         )
 
         adapter.addLoadStateListener { state ->
-            binding.progress.isVisible = state.mediator?.refresh is LoadState.Loading
+            binding.progress.isVisible = state.refresh is LoadState.Loading
 
-            if (state.mediator?.refresh is LoadState.Error) {
+            if (state.refresh is LoadState.Error) {
 
             }
         }

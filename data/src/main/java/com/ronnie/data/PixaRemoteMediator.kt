@@ -1,6 +1,5 @@
 package com.ronnie.data
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -12,7 +11,6 @@ import com.ronnie.domain.Image
 import com.ronnie.domain.RemoteKey
 import retrofit2.HttpException
 import java.io.IOException
-import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
 class PixaRemoteMediator(
