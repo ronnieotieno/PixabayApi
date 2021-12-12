@@ -11,7 +11,7 @@ android {
 
 	defaultConfig {
 		applicationId "com.ronnie.payback_pixabay"
-		minSdk rootProject.	minSdkVersion
+		minSdk rootProject.minSdkVersion
 		targetSdk rootProject.targetSdkVersion
 		versionCode 1
 		versionName "1.0"

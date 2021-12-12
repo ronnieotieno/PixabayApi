@@ -10,6 +10,10 @@ android {
 	compileSdk rootProject.compileSdkVersion
 
 	defaultConfig {
+
+		minSdk rootProject.minSdkVersion
+		targetSdk rootProject.targetSdkVersion
+
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles "consumer-rules.pro"
 
@@ -64,7 +68,7 @@ dependencies {
 
 	//workmanager
 	implementation "androidx.work:work-runtime-ktx:$workVersion"
-	
+
 	implementation "com.github.bumptech.glide:glide:$glide_version"
 	annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
@@ -73,8 +77,8 @@ dependencies {
 	implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 
 	//navigation
-	implementation "androidx.navigation:navigation-fragment-ktx:$ktxVersion"
-	implementation "androidx.navigation:navigation-ui-ktx:$ktxVersion"
+	implementation "androidx.navigation:navigation-fragment-ktx:$ktxNavVersion"
+	implementation "androidx.navigation:navigation-ui-ktx:$ktxNavVersion"
 
 	implementation "androidx.activity:activity-ktx:$activityKtxVersion"
 

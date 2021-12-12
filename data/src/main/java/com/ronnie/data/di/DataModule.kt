@@ -84,7 +84,6 @@ object DataModule {
         }
 
 
-    @SuppressLint("NewApi")
     private val cacheInterceptor = Interceptor { chain ->
         val response: Response = chain.proceed(chain.request())
         val cacheControl = CacheControl.Builder()
