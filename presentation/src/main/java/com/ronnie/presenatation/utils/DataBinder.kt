@@ -1,14 +1,11 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.utils
 
 import android.annotation.SuppressLint
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 object DataBinder {

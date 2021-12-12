@@ -1,14 +1,15 @@
-package com.ronnie.data
+package com.ronnie.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.ronnie.commons.FIRST_PAGE
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.db.PixaBayRoomDb
-import com.ronnie.domain.Image
-import com.ronnie.domain.RemoteKey
+import com.ronnie.domain.models.Image
+import com.ronnie.domain.models.RemoteKey
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -23,7 +24,7 @@ class PixaRemoteMediator(
         val page: Int = when (loadType) {
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                    remoteKeys?.nextPage?.minus(1) ?: 1
+                    remoteKeys?.nextPage?.minus(1) ?: FIRST_PAGE
                 }
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -53,7 +54,7 @@ class PixaRemoteMediator(
                     db.imageDao().clearAll()
                     db.remoteKeyDao().clearRemoteKeys()
                 }
-               val prevKey = if (page == 1) null else page - 1
+               val prevKey = if (page == FIRST_PAGE) null else page - 1
                val  nextKey = if (endOfPaginationReached) null else page + 1
 
                val keys = images.map {

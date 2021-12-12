@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ronnie.commons.DB_NAME
 import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.dao.RemoteKeyDao
-import com.ronnie.domain.Image
-import com.ronnie.domain.RemoteKey
+import com.ronnie.domain.models.Image
+import com.ronnie.domain.models.RemoteKey
 import javax.inject.Singleton
 
 
@@ -39,7 +40,7 @@ abstract class PixaBayRoomDb : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 PixaBayRoomDb::class.java,
-                "pixabay_db"
+                DB_NAME
             ).fallbackToDestructiveMigration()
                 .build()
     }

@@ -2,6 +2,10 @@ package com.ronnie.data.di
 
 import android.app.Application
 import android.content.Context
+import com.ronnie.commons.BASE_URL
+import com.ronnie.commons.CACHE_NAME
+import com.ronnie.commons.IMAGE_TYPE
+import com.ronnie.commons.KEY
 import com.ronnie.data.BuildConfig
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.db.PixaBayRoomDb
@@ -18,7 +22,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -40,11 +43,11 @@ object DataModule {
         if (BuildConfig.DEBUG) okHttpClient.addInterceptor(loggingInterceptor)
         return okHttpClient.build()
     }
-    //TODO MOVE BASE URL
+
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://pixabay.com/")
+        .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -55,7 +58,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb)
+    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb, @ApplicationContext context: Context):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb,context )
 
     @Provides
     @Singleton
@@ -67,8 +70,8 @@ object DataModule {
             val request = chain.request().newBuilder()
             val originalHttpUrl = chain.request().url
             val url = originalHttpUrl.newBuilder()
-                .addQueryParameter("key", "12990678-12462fcc2da6261905f9a3a04")
-                .addQueryParameter("image_type","photo")
+                .addQueryParameter(KEY.first, KEY.second)
+                .addQueryParameter(IMAGE_TYPE.first, IMAGE_TYPE.second)
                 .build()
             request.url(url)
             chain.proceed(request.build())
@@ -87,7 +90,7 @@ object DataModule {
     @Singleton
     fun provideCache(app: Application): Cache {
         return Cache(
-            File(app.applicationContext.cacheDir, "pixabay_cache"),
+            File(app.applicationContext.cacheDir, CACHE_NAME),
             10485760L
         )
     }

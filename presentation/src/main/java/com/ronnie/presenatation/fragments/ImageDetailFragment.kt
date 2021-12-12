@@ -1,22 +1,23 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.fragments
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
+import com.ronnie.presenatation.viewmodel.MainViewModel
+import com.ronnie.presenatation.R
 import com.ronnie.presenatation.databinding.FragmentImageDetailsBinding
+import com.ronnie.presenatation.utils.changeStatusBar
+import com.ronnie.presenatation.utils.setToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
     private lateinit var binding:FragmentImageDetailsBinding
-    private val viewModel:MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentImageDetailsBinding.bind(view)
@@ -51,6 +52,11 @@ class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
                 .load(imageUri)
                 .into(this)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().changeStatusBar(false)
     }
 
 }

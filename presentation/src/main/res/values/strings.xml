@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search</string>
+    <string name="clear_search_desc">Image to clear search bar</string>
+    <string name="retry">Retry</string>
+    <string name="alert">Do you want to see more of this image by </string>
+    <string name="error_loading_images">There was an error loading the images, please check your internet and try again</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_result">Your search didn\'t bring up any result</string>
+    <string name="nothing">Nothing!!</string>
+    <string name="are_you_sure">Are you sure?</string>
+</resources>

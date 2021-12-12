@@ -1,4 +1,4 @@
-package com.ronnie.domain
+package com.ronnie.domain.models
 
 import com.google.gson.annotations.SerializedName
 

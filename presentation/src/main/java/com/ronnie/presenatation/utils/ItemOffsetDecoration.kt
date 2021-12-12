@@ -1,4 +1,4 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.utils
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration

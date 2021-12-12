@@ -1,4 +1,4 @@
-package com.ronnie.domain
+package com.ronnie.domain.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

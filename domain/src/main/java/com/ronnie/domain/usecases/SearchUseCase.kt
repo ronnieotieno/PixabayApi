@@ -2,7 +2,7 @@ package com.ronnie.domain.usecases
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
-import com.ronnie.domain.Image
+import com.ronnie.domain.models.Image
 import com.ronnie.domain.repositories.SearchImagesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

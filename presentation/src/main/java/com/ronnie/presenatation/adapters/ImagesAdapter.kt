@@ -1,13 +1,15 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ronnie.domain.Image
+import com.ronnie.domain.models.Image
+import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
+import com.ronnie.presenatation.utils.NETWORK_VIEW_TYPE
 import com.ronnie.presenatation.databinding.ImageItemBinding
+import com.ronnie.presenatation.utils.imageDiffCallback
 
 class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
     PagingDataAdapter<Image, ImagesAdapter.ImageViewHolder>(imageDiffCallback) {
@@ -46,15 +48,5 @@ class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
         } else {
             IMAGE_VIEW_TYPE
         }
-    }
-}
-
-private val imageDiffCallback = object : DiffUtil.ItemCallback<Image>() {
-    override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
-        return oldItem.id == newItem.id && oldItem.largeImageURL == oldItem.largeImageURL
-    }
-
-    override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
-        return oldItem == newItem
     }
 }

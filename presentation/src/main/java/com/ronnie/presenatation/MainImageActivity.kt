@@ -3,6 +3,7 @@ package com.ronnie.presenatation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ronnie.presenatation.databinding.ActivityMainBinding
+import com.ronnie.presenatation.utils.changeStatusBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

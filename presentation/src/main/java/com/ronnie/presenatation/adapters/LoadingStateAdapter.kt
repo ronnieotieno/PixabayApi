@@ -1,4 +1,4 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.ronnie.presenatation
+package com.ronnie.presenatation.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -14,23 +14,26 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.ronnie.data.api.PixaBayApi
-import com.ronnie.domain.Image
+import com.ronnie.domain.models.Image
+import com.ronnie.presenatation.utils.ItemOffsetDecoration
+import com.ronnie.presenatation.adapters.LoadingStateAdapter
+import com.ronnie.presenatation.viewmodel.MainViewModel
+import com.ronnie.presenatation.R
+import com.ronnie.presenatation.adapters.ImagesAdapter
 import com.ronnie.presenatation.databinding.FragmentImageListBinding
+import com.ronnie.presenatation.dialogs.ConfirmDialogFragment
+import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
+import com.ronnie.presenatation.utils.changeStatusBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,21 +41,25 @@ import javax.inject.Inject
 class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     private lateinit var binding:FragmentImageListBinding
     private val adapter = ImagesAdapter { image, imageView ->  startNavigation(image,imageView)}
-    private val viewModel:MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private var gridLayoutSpan = 2
+    private lateinit var snackBar:Snackbar
     private var isInitiated = false
 
     @Inject
     lateinit var api: PixaBayApi
     private var job:Job? = null
 
+    @Inject
+    lateinit var confirmDialogFragment:ConfirmDialogFragment
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentImageListBinding.bind(view)
         setSearchViewListener()
         setUpAdapter()
-      //  if(!isInitiated)
-            init()
+        makeSnackBar()
+        if(!isInitiated) init()
 
     }
 
@@ -87,8 +94,12 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         adapter.addLoadStateListener { state ->
             binding.progress.isVisible = state.refresh is LoadState.Loading
 
-            if (state.refresh is LoadState.Error) {
+            binding.emptySection.isVisible = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
 
+            if (state.refresh is LoadState.Error) {
+                snackBar.show()
+            }else{
+                snackBar.dismiss()
             }
         }
     }
@@ -140,13 +151,17 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         val extras = FragmentNavigatorExtras(
             imageView to image.largeImageURL
         )
-        showConfirmDialogAlertDialog({navigate(extras)}, image.user)
+        viewModel.currentDirectionExtras = extras
+        showConfirmDialog( image.user)
     }
 
-    private fun navigate(extras:FragmentNavigator.Extras){
-        val action = ImagesListFragmentDirections.toImageDetailFragment()
-        findNavController().navigate(action, extras)
-        changeStatusBarColorToBlack()
+    fun navigate(){
+        val extras = viewModel.currentDirectionExtras
+        extras?.let {
+            val action = ImagesListFragmentDirections.toImageDetailFragment()
+            findNavController().navigate(action, extras)
+            changeStatusBarColorToBlack()
+        }
     }
 
 
@@ -172,13 +187,28 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         }
     }
 
-    private fun showConfirmDialogAlertDialog(navigate: () -> Unit, user: String) {
-        MaterialAlertDialogBuilder(requireContext(),
-            R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog)
-            .setMessage("Do you want to see more of this image by ${user}?")
-            .setPositiveButton("Confirm") { _, _ -> navigate.invoke()}
-            .setNegativeButton("Cancel", null)
-            .show()
+    private fun showConfirmDialog(user: String) {
+        val bundle = Bundle()
+        bundle.putString("user", user)
+        confirmDialogFragment.arguments = bundle
+        confirmDialogFragment.show(childFragmentManager, null)
+
+    }
+    private fun makeSnackBar() {
+        val parentLayout = requireActivity().findViewById<View>(android.R.id.content)
+        snackBar = Snackbar.make(
+            parentLayout,
+            getString(R.string.error_loading_images),
+            Snackbar.LENGTH_INDEFINITE
+        ).setAction(getString(R.string.retry)){
+            searchImages(viewModel.currentSearch,true)
+        }
+        snackBar.setActionTextColor(requireContext().getColor(R.color.teal_200))
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().changeStatusBar(true)
+    }
 }
