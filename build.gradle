@@ -15,6 +15,31 @@ buildscript {
 	}
 }
 
+ext {
+	compileSdkVersion = 31
+	minSdkVersion = 23
+	targetSdkVersion = 31
+	room = "2.4.0-rc01"
+	core = "1.7.0"
+	compat = "1.4.0"
+	material = "1.4.0"
+	hiltVersion = "2.38.1"
+	hiltCompiler = "1.0.0"
+	glide_version = '4.12.0'
+	jUnitVersion = "4.13.2"
+	jUnitVersionEx = "1.1.3"
+	espressoCore = "3.4.0"
+	pagingVersion = "3.1.0"
+	retrofitVersion = "2.9.0"
+	okhttpVersion = "4.9.1"
+	constraintVersion = "2.1.2"
+	workVersion = "2.7.1"
+	swipeVersion = "1.1.0"
+	ktxVersion = "2.3.5"
+	activityKtxVersion = "1.4.0"
+	extVersion = "2.2.0"
+}
+
 task clean(type: Delete) {
 	delete rootProject.buildDir
 }
