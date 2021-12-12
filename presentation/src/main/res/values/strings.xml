@@ -4,10 +4,12 @@
     <string name="clear_search_desc">Image to clear search bar</string>
     <string name="retry">Retry</string>
     <string name="alert">Do you want to see more of this image by </string>
-    <string name="error_loading_images">There was an error loading the images, please check your internet and try again</string>
+    <string name="error_loading_images">There was an error loading the images,\nplease check your internet and try again</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="no_result">Your search didn\'t bring up any result</string>
     <string name="nothing">Nothing!!</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="your_connection_be_is_off">Your connection seems off…</string>
+    <string name="try_again">Try Again</string>
 </resources>

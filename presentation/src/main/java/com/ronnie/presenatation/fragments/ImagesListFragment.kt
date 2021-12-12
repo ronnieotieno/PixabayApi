@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -44,7 +45,6 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     private val adapter = ImagesAdapter { image, imageView ->  startNavigation(image,imageView)}
     private val viewModel: MainViewModel by activityViewModels()
     private var gridLayoutSpan = 2
-    private lateinit var snackBar:Snackbar
     private var isInitiated = false
 
     @Inject
@@ -60,8 +60,11 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         binding = FragmentImageListBinding.bind(view)
         setSearchViewListener()
         setUpAdapter()
-        makeSnackBar()
         if(!isInitiated) init()
+
+        binding.retryBtn.setOnClickListener {
+            adapter.refresh()
+        }
 
     }
 
@@ -97,12 +100,8 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             binding.progress.isVisible = state.refresh is LoadState.Loading
 
             binding.emptySection.isVisible = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            binding.errorSection.isVisible = state.refresh is LoadState.Error
 
-            if (state.refresh is LoadState.Error) {
-                snackBar.show()
-            }else{
-                snackBar.dismiss()
-            }
         }
     }
 
@@ -154,7 +153,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             imageView to image.largeImageURL
         )
         viewModel.currentDirectionExtras = extras
-        showConfirmDialog( image.user)
+        showConfirmDialog(image.user)
     }
 
     fun navigate(){
@@ -190,22 +189,11 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     }
 
     private fun showConfirmDialog(user: String) {
-        val bundle = Bundle()
-        bundle.putString("user", user)
+        val bundle = bundleOf(
+            "user" to user
+        )
         confirmDialogFragment.arguments = bundle
         confirmDialogFragment.show(childFragmentManager, null)
-
-    }
-    private fun makeSnackBar() {
-        val parentLayout = requireActivity().findViewById<View>(android.R.id.content)
-        snackBar = Snackbar.make(
-            parentLayout,
-            getString(R.string.error_loading_images),
-            Snackbar.LENGTH_INDEFINITE
-        ).setAction(getString(R.string.retry)){
-            adapter.refresh()
-        }
-        snackBar.setActionTextColor(requireContext().getColor(R.color.teal_200))
 
     }
 
