@@ -12,6 +12,9 @@ class MainImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        //useful in Android 11 going down, removes the logo which act as splash screen.
+        window?.setBackgroundDrawableResource(R.color.white)
         setContentView(binding.root)
 
     }

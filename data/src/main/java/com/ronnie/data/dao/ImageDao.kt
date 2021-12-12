@@ -7,6 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ronnie.domain.models.Image
 
+/**
+ * Used to query cached Images
+ */
 @Dao
 interface ImageDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)

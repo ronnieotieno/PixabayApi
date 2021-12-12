@@ -9,6 +9,9 @@ import com.ronnie.data.api.PixaBayApi
 import com.ronnie.domain.models.Image
 import java.io.IOException
 
+/**
+ * Paging 3 data source to query the pages based on recyclerview scroll state
+ */
 class PixaDataSource(private val searchString: String, private val pixaBayApi: PixaBayApi, private val context: Context) :
     PagingSource<Int, Image>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Image> {

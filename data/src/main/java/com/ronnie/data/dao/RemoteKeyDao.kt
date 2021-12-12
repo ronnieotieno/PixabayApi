@@ -6,6 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ronnie.domain.models.RemoteKey
 
+/**
+ * Used to query stored keys
+ */
 @Dao
 interface RemoteKeyDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)

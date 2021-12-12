@@ -27,6 +27,7 @@ class ConfirmDialogFragment @Inject constructor()  : DialogFragment(R.layout.fra
 
         val user = arguments?.getString("user")
 
+        //Shows the name of the user in bold
         val alert = SpannableStringBuilder()
             .append(getString(R.string.alert))
             .append(" ")
@@ -44,6 +45,7 @@ class ConfirmDialogFragment @Inject constructor()  : DialogFragment(R.layout.fra
             }
         }
     }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

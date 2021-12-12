@@ -11,6 +11,10 @@ import com.ronnie.domain.models.Image
 import com.ronnie.domain.models.RemoteKey
 import javax.inject.Singleton
 
+/**
+ * Room, architecture component build on top of Sqlite.
+ * Used to cache images.
+ */
 
 @Database(
     entities = [Image::class, RemoteKey::class],

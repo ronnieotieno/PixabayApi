@@ -8,6 +8,10 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronnie.presenatation.databinding.NetworkStateItemBinding
 
+/**
+ * Show a new item of loading ui when the user scroll to bottom of adapter when loading
+ * Also shows error when the next page couldnt be fetched.
+ */
 class LoadingStateAdapter(private val retry: () -> Unit) :
     LoadStateAdapter<LoadingStateAdapter.LoadStateViewHolder>() {
 

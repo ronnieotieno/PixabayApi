@@ -8,6 +8,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
+/**
+ * Data binders to bind the tags and image to the views
+ */
 object DataBinder {
         @JvmStatic
         @BindingAdapter("imageFromUrl")
@@ -29,7 +32,7 @@ object DataBinder {
     @JvmStatic
     @BindingAdapter("modelTags")
     fun modelTags(textView: TextView, tags:String){
-        val tagList = tags.replace(", ", ", #")
+        val tagList = tags.replace(", ", ", #") //Replacing with #
         textView.text = "#${tagList}"
     }
 

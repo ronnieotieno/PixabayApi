@@ -3,12 +3,12 @@ package com.ronnie.presenatation.fragments
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
-import androidx.core.view.WindowInsetsCompat.Type
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowInsetsCompat.Type
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -20,19 +20,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.domain.models.Image
-import com.ronnie.presenatation.utils.ItemOffsetDecoration
-import com.ronnie.presenatation.adapters.LoadingStateAdapter
-import com.ronnie.presenatation.viewmodel.MainViewModel
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.adapters.ImagesAdapter
+import com.ronnie.presenatation.adapters.LoadingStateAdapter
 import com.ronnie.presenatation.databinding.FragmentImageListBinding
 import com.ronnie.presenatation.dialogs.ConfirmDialogFragment
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
+import com.ronnie.presenatation.utils.ItemOffsetDecoration
 import com.ronnie.presenatation.utils.changeStatusBar
-import com.ronnie.presenatation.utils.setBackgroundWhite
+import com.ronnie.presenatation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -40,27 +38,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
-    private lateinit var binding:FragmentImageListBinding
-    private val adapter = ImagesAdapter { image, imageView ->  startNavigation(image,imageView)}
+class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
+    private lateinit var binding: FragmentImageListBinding
+    private val adapter = ImagesAdapter { image, imageView -> startNavigation(image, imageView) }
     private val viewModel: MainViewModel by activityViewModels()
     private var gridLayoutSpan = 2
     private var isInitiated = false
 
     @Inject
     lateinit var api: PixaBayApi
-    private var job:Job? = null
+    private var job: Job? = null
 
     @Inject
-    lateinit var confirmDialogFragment:ConfirmDialogFragment
+    lateinit var confirmDialogFragment: ConfirmDialogFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBackgroundWhite()
         binding = FragmentImageListBinding.bind(view)
         setSearchViewListener()
         setUpAdapter()
-        if(!isInitiated) init()
+
+        if (!isInitiated) init()
 
         binding.retryBtn.setOnClickListener {
             adapter.refresh()
@@ -99,30 +97,33 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         adapter.addLoadStateListener { state ->
             binding.progress.isVisible = state.refresh is LoadState.Loading
 
-            binding.emptySection.isVisible = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            binding.emptySection.isVisible =
+                state.refresh is LoadState.NotLoading && adapter.itemCount == 0
             binding.errorSection.isVisible = state.refresh is LoadState.Error
 
         }
     }
 
-    private fun init(){
+    private fun init() {
         isInitiated = true
         searchImages(viewModel.currentSearch)
-        binding.searchView.setText(viewModel.currentSearch)
+        binding.searchView.apply {
+            setText(viewModel.currentSearch)
+            text?.length?.let { setSelection(it) }
+        }
     }
 
-    private fun searchImages(searchString: String, isUserInitiated:Boolean = false) {
+    private fun searchImages(searchString: String, isUserInitiated: Boolean = false) {
         job?.cancel()
-        job = viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.currentSearch = searchString
-            if(isUserInitiated) adapter.submitData(PagingData.empty())
+        job = viewLifecycleOwner.lifecycleScope.launch {
+            if (isUserInitiated) adapter.submitData(PagingData.empty())
             viewModel.searchImages(searchString).collectLatest {
                 adapter.submitData(it)
             }
         }
     }
 
-    private fun setSearchViewListener(){
+    private fun setSearchViewListener() {
         binding.searchView.apply {
             addTextChangedListener { text: Editable? ->
                 binding.cancelSearch.isVisible = text.toString().isNotEmpty()
@@ -130,9 +131,9 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     val query = text.toString().trim()
-                    if(query.isNotEmpty()) {
-                        searchImages(query,true)
-                    }else{
+                    if (query.isNotEmpty()) {
+                        searchImages(query, true)
+                    } else {
                         binding.searchView.text = null
                     }
                     hideSoftKeyboard()
@@ -142,7 +143,10 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             })
         }
         binding.cancelSearch.setOnClickListener {
-            binding.searchView.text = null
+            binding.searchView.apply {
+                text = null
+                requestFocus()
+            }
             showSoftKeyboard()
         }
     }
@@ -156,7 +160,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
         showConfirmDialog(image.user)
     }
 
-    fun navigate(){
+    fun navigate() {
         val extras = viewModel.currentDirectionExtras
         extras?.let {
             val action = ImagesListFragmentDirections.toImageDetailFragment()
@@ -166,7 +170,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     }
 
 
-    private fun changeStatusBarColorToBlack(){
+    private fun changeStatusBarColorToBlack() {
         requireActivity().apply {
             changeStatusBar(false)
         }
@@ -200,5 +204,6 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
     override fun onResume() {
         super.onResume()
         requireActivity().changeStatusBar(true)
+        hideSoftKeyboard()
     }
 }

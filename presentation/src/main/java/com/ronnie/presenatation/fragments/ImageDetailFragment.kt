@@ -7,12 +7,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
-import com.ronnie.presenatation.viewmodel.MainViewModel
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.databinding.FragmentImageDetailsBinding
 import com.ronnie.presenatation.utils.changeStatusBar
-import com.ronnie.presenatation.utils.setBackgroundWhite
 import com.ronnie.presenatation.utils.setToolbar
+import com.ronnie.presenatation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,18 +20,14 @@ class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
     private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBackgroundWhite()
         binding = FragmentImageDetailsBinding.bind(view)
         binding.image = viewModel.selectedImage
         loadTransition()
 
         binding.toolbar.apply {
-            setToolbar(binding.toolbar)
+            setToolbar(this)
             setNavigationOnClickListener {
                 findNavController().navigateUp()
-                requireActivity().apply {
-                    changeStatusBar(true)
-                }
             }
         }
 
@@ -41,9 +36,6 @@ class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
-        requireActivity().apply {
-            changeStatusBar(false)
-        }
     }
 
     private fun loadTransition(){

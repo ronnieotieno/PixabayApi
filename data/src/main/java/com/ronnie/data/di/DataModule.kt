@@ -24,6 +24,9 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+/**
+ * Hilt Module, used to provide dependencies
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
