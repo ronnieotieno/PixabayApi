@@ -51,7 +51,7 @@ class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
 
 private val imageDiffCallback = object : DiffUtil.ItemCallback<Image>() {
     override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id == newItem.id && oldItem.largeImageURL == oldItem.largeImageURL
     }
 
     override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {

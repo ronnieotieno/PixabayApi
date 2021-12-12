@@ -16,27 +16,27 @@ import javax.inject.Inject
 @OptIn(ExperimentalPagingApi::class)
 class SearchImagesRepositoryImpl @Inject constructor(private val pixaBayApi: PixaBayApi, private val pixaBayRoomDb: PixaBayRoomDb):SearchImagesRepository {
 
-//    override fun searchImages(searchString: String): Flow<PagingData<Image>> {
-//        return Pager(
-//            config = PagingConfig(enablePlaceholders = false, pageSize = 25),
-//            pagingSourceFactory = {
-//                PixaDataSource(searchString,pixaBayApi)
-//            }
-//        ).flow
-//    }
-    @OptIn(ExperimentalPagingApi::class)
     override fun searchImages(searchString: String): Flow<PagingData<Image>> {
-        val dbQuery = "%${searchString.replace(' ', '%')}%"
         return Pager(
-            config = PagingConfig(
-                pageSize = 25,
-                enablePlaceholders = false
-            ),
-            remoteMediator = PixaRemoteMediator(
-                pixaBayApi,
-                searchString,
-                pixaBayRoomDb
-            )
-        ) { pixaBayRoomDb.imageDao().queryImages(dbQuery)}.flow
+            config = PagingConfig(enablePlaceholders = false, pageSize = 25),
+            pagingSourceFactory = {
+                PixaDataSource(searchString,pixaBayApi)
+            }
+        ).flow
     }
+//    @OptIn(ExperimentalPagingApi::class)
+//    override fun searchImages(searchString: String): Flow<PagingData<Image>> {
+//        val dbQuery = "%${searchString.replace(' ', '%')}%"
+//        return Pager(
+//            config = PagingConfig(
+//                pageSize = 25,
+//                enablePlaceholders = false
+//            ),
+//            remoteMediator = PixaRemoteMediator(
+//                pixaBayApi,
+//                searchString,
+//                pixaBayRoomDb
+//            )
+//        ) { pixaBayRoomDb.imageDao().queryImages(dbQuery)}.flow
+//    }
 }
