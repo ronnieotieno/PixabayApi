@@ -11,6 +11,7 @@ import com.ronnie.presenatation.viewmodel.MainViewModel
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.databinding.FragmentImageDetailsBinding
 import com.ronnie.presenatation.utils.changeStatusBar
+import com.ronnie.presenatation.utils.setBackgroundWhite
 import com.ronnie.presenatation.utils.setToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,7 @@ class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
     private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBackgroundWhite()
         binding = FragmentImageDetailsBinding.bind(view)
         binding.image = viewModel.selectedImage
         loadTransition()

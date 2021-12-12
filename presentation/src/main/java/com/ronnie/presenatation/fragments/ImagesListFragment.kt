@@ -31,6 +31,7 @@ import com.ronnie.presenatation.databinding.FragmentImageListBinding
 import com.ronnie.presenatation.dialogs.ConfirmDialogFragment
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
 import com.ronnie.presenatation.utils.changeStatusBar
+import com.ronnie.presenatation.utils.setBackgroundWhite
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -55,6 +56,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBackgroundWhite()
         binding = FragmentImageListBinding.bind(view)
         setSearchViewListener()
         setUpAdapter()
@@ -201,7 +203,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_image_list) {
             getString(R.string.error_loading_images),
             Snackbar.LENGTH_INDEFINITE
         ).setAction(getString(R.string.retry)){
-            searchImages(viewModel.currentSearch,true)
+            adapter.refresh()
         }
         snackBar.setActionTextColor(requireContext().getColor(R.color.teal_200))
 
