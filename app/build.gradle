@@ -8,6 +8,7 @@ plugins {
 
 android {
 	compileSdk rootProject.compileSdkVersion
+	buildToolsVersion "30.0.3"
 
 	defaultConfig {
 		applicationId "com.ronnie.payback_pixabay"
@@ -49,6 +50,8 @@ dependencies {
 	implementation "androidx.core:core-ktx:$core"
 	implementation "androidx.appcompat:appcompat:$compat"
 	implementation "com.google.android.material:material:$material"
+	testImplementation "junit:junit:$jUnitVersion"
+	androidTestImplementation "androidx.test.ext:junit:$jUnitVersionEx"
 	implementation project(':presentation')
 
 	//dagger hilt

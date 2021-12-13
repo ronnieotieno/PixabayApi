@@ -1,6 +1,7 @@
 package com.ronnie.data
 import android.content.Context
 import androidx.paging.PagingSource
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,13 +18,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 
-
+@RunWith(AndroidJUnit4::class)
 class PixaDataSourceTest {
     private var context: Context? = null
     private var mockWebServer = MockWebServer()
