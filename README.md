@@ -30,7 +30,7 @@ When the Image is clicked, a dialog is shown and upon positive user input the ap
 
 The app is built using the Modular MVVM architectural pattern and makes heavy use of a couple of Android Jetpack components. MVVM allows for the separation of concern which also makes testing easier. The app has a fragment that communicates to ViewModel which in turn communicates to the usecase which communiacates to Repository to get data. 
 
-|<img src="screenshots/arch.png" width=300/>|
+|<img src="screenshots/arch.png" width=300 height=500/>|
 |:----:|
 
 ## Testing
@@ -55,11 +55,11 @@ Libraries used in the whole application are:
 ## Screenshots
 
 
-|<img src="screenshots/home.png" width=200/>|<img src="screenshots/dialog.png" width=200/>|<img src="screenshots/details.png" width=200/>|
+|<img src="screenshots/home.png" width=250/>|<img src="screenshots/dialog.png" width=250/>|<img src="screenshots/details.png" width=250/>|
 |:----:|:----:|:----:|
 
-|<img src="screenshots/empty.png" width=200/>|<img src="screenshots/error.png" width=200/>|<img src="screenshots/error_paging.png" width=200/>|
+|<img src="screenshots/empty.png" width=250/>|<img src="screenshots/error.png" width=250/>|<img src="screenshots/error_paging.png" width=250/>|
 |:----:|:----:|:----:|
 
-|<img src="screenshots/home_land.png" width=300/>|<img src="screenshots/detail_land.png" width=300/>|
+|<img src="screenshots/home_land.png" width=300 height=150/>|<img src="screenshots/detail_land.png" width=300/>|
 |:----:|:----:|
