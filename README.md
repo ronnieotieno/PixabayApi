@@ -44,7 +44,8 @@ Libraries used in the whole application are:
 - [Jetpack](https://developer.android.com/jetpack)🚀
   - [Viewmodel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Manage UI related data in a lifecycle conscious way
   - [Data Binding](https://developer.android.com/topic/libraries/data-binding) - support library that allows binding of UI components in  layouts to data sources, binds character details and search results to UI
-  - [Room](https://developer.android.com/training/data-storage/room) - Provides abstraction layer over SQLite
+  - [Room](https://developer.android.com/training/data-storage/room) - Provides abstraction layer over SQLite used for cache
+  - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) used for paging
 - [Retrofit](https://square.github.io/retrofit/) - Type-safe HTTP client and supports coroutines out of the box.  Used for the network calls.
 - [Gson](https://github.com/google/gson) - Used to convert JSON to Java/Kotlin classes for the Retrofit
 - [okhttp-logging-interceptor](https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md) - logs HTTP request and response data.
