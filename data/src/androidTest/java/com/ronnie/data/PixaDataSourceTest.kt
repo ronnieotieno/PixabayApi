@@ -1,17 +1,13 @@
 package com.ronnie.data
 import android.content.Context
 import androidx.paging.PagingSource
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.datasource.PixaDataSource
 import com.ronnie.domain.models.Image
+import com.ronnie.domain.models.ImageResponse
 import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
@@ -19,75 +15,58 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations.initMocks
+import org.mockito.junit.MockitoJUnitRunner
 import java.io.InputStream
-import java.net.HttpURLConnection
-import java.util.concurrent.TimeUnit
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(MockitoJUnitRunner::class)
 class PixaDataSourceTest {
-    private var context: Context? = null
-    private var mockWebServer = MockWebServer()
+   lateinit var context:Context
+    @Mock
     private lateinit var apiService: PixaBayApi
     private lateinit var pagingSource: PixaDataSource
     private lateinit var imageList: List<Image>
     private val gson = Gson()
+    private lateinit var responseImageResponse:ImageResponse
 
     @Before
     fun setup() {
-        mockWebServer.start()
-
-        val loggingInterceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        initMocks(this)
         context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
-
-        apiService = Retrofit.Builder()
-            .baseUrl(mockWebServer.url("/"))
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-            .create(PixaBayApi::class.java)
-
-        val jsonStream: InputStream = context!!.resources.assets.open("response.json")
+        val jsonStream: InputStream = context.resources.assets.open("response.json")
         val jsonBytes: ByteArray = jsonStream.readBytes()
 
+        responseImageResponse = gson.fromJson(String(jsonBytes), ImageResponse::class.java)
+        imageList = responseImageResponse.images
 
-        imageList = gson.fromJson(String(jsonBytes), object : TypeToken<List<Image>>() {}.type)
+        pagingSource = PixaDataSource("fruits", apiService, context)
 
-        val response = MockResponse()
-            .setResponseCode(HttpURLConnection.HTTP_OK)
-            .setBody(String(jsonBytes))
-        mockWebServer.enqueue(response)
-        pagingSource = PixaDataSource("",apiService,context!!)
-
-    }
-
-    @After
-    fun teardown() {
-        mockWebServer.shutdown()
     }
 
     @Test
-    fun loadReturnsPageWhenOnSuccessfulLoadOfItemKeyedData() = runBlocking {
-        assertThat(  PagingSource.LoadResult.Page(
-            data =  imageList,
-            prevKey = null,
-            nextKey = 2
-        ), CoreMatchers.equalTo( pagingSource.load(
-            PagingSource.LoadParams.Refresh(
-                key = null,
-                loadSize = 20,
-                placeholdersEnabled = false
-            )
-        )))
+    fun load_returns_page_when_success() = runBlocking {
+        Mockito.`when`(apiService.searchImages(anyString(), anyInt(), anyInt())).thenReturn(responseImageResponse)
+        assertThat(
+            pagingSource.load(
+                PagingSource.LoadParams.Refresh(
+                    key = null,
+                    loadSize = 20,
+                    placeholdersEnabled = false
+                )
+            ),
+            CoreMatchers.equalTo(
+                PagingSource.LoadResult.Page(
+                    data = imageList,
+                    prevKey = null,
+                    nextKey = 2
+                )
+            ),
+        )
     }
 
 }

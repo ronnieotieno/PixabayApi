@@ -8,8 +8,8 @@ interface PixaBayApi {
 
     @GET("api/")
     suspend fun searchImages(
-        @Query("q") searchString: String?,
-        @Query("per_page") per_page: Int?,
+        @Query("q") searchString: String?= null,
+        @Query("per_page") per_page: Int? = null,
         @Query("page") page: Int? = null,
     ): ImageResponse
 }

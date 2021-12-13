@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.ronnie.domain.models.Image
 import com.ronnie.domain.models.RemoteKey
 
 /**
@@ -25,4 +26,7 @@ interface RemoteKeyDao {
 
   @Query("DELETE FROM remote_keys")
   suspend fun clearRemoteKeys()
+
+  @Query("SELECT * FROM remote_keys")
+  suspend fun getAll():List<RemoteKey>
 }

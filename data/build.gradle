@@ -45,6 +45,7 @@ dependencies {
 	implementation "androidx.core:core-ktx:$core"
 	implementation "androidx.appcompat:appcompat:$compat"
 	testImplementation "junit:junit:$jUnitVersion"
+	androidTestImplementation "androidx.test:rules:$rulesVersion"
 	androidTestImplementation "androidx.test.ext:junit:$jUnitVersionEx"
 
 	implementation project(':commons')
@@ -62,6 +63,9 @@ dependencies {
 	implementation "com.squareup.okhttp3:logging-interceptor:"
 	implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 	implementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+	androidTestImplementation "org.mockito:mockito-core:$mockito"
+	testImplementation "org.mockito:mockito-core:$mockito"
+	androidTestImplementation "org.mockito:mockito-android:$mockito"
 
 	//pagination
 	implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"

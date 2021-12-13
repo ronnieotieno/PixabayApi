@@ -53,6 +53,7 @@ dependencies {
 	implementation "androidx.appcompat:appcompat:$compat"
 	implementation "com.google.android.material:material:$material"
 	testImplementation "junit:junit:$jUnitVersion"
+	androidTestImplementation "androidx.test:rules:$rulesVersion"
 	androidTestImplementation "androidx.test.ext:junit:$jUnitVersionEx"
 	androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
 	implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
@@ -85,5 +86,5 @@ dependencies {
 
 	//pagination
 	implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
-
+	implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 }

@@ -13,12 +13,15 @@ import com.ronnie.domain.models.Image
 @Dao
 interface ImageDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAll(users: List<Image>)
+  suspend fun insertAll(images: List<Image>)
 
   @Query("SELECT * FROM image_table WHERE searchTerm LIKE :query")
   fun queryImages(query: String): PagingSource<Int, Image>
 
   @Query("DELETE FROM image_table")
   suspend fun clearAll()
+
+  @Query("SELECT * FROM image_table")
+  suspend fun getAll():List<Image>
 
 }

@@ -1,10 +1,7 @@
 package com.ronnie.data.di
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ronnie.commons.BASE_URL
 import com.ronnie.commons.CACHE_NAME
 import com.ronnie.commons.IMAGE_TYPE

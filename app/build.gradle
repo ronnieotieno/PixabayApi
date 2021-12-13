@@ -51,8 +51,13 @@ dependencies {
 	implementation "androidx.appcompat:appcompat:$compat"
 	implementation "com.google.android.material:material:$material"
 	testImplementation "junit:junit:$jUnitVersion"
+	androidTestImplementation 'androidx.test:rules:1.4.0'
 	androidTestImplementation "androidx.test.ext:junit:$jUnitVersionEx"
 	implementation project(':presentation')
+	androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+	androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoCore"
+
+	implementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
 
 	//dagger hilt
 	implementation "com.google.dagger:hilt-android:$hiltVersion"
