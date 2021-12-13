@@ -61,5 +61,5 @@ Libraries used in the whole application are:
 |<img src="screenshots/empty.png" width=250/>|<img src="screenshots/error.png" width=250/>|<img src="screenshots/error_paging.png" width=250/>|
 |:----:|:----:|:----:|
 
-|<img src="screenshots/home_land.png" width=300 height=150/>|<img src="screenshots/detail_land.png" width=300/>|
+|<img src="screenshots/home_land.png" width=400 height=300>|<img src="screenshots/detail_land.png" width=400 height=300/>|
 |:----:|:----:|
