@@ -13,7 +13,7 @@ Build System : [Gradle](https://gradle.org/)
 - [Architecture](#architecture)
 - [Testing](#testing)
 - [Libraries](#libraries)
-- [Demo](#demo)
+- [Screenshots](#screenshots)
 
 ## Prerequisite
 
