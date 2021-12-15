@@ -43,7 +43,7 @@ Libraries used in the whole application are:
 
 - [Jetpack](https://developer.android.com/jetpack)🚀
   - [Viewmodel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Manage UI related data in a lifecycle conscious way
-  - [Data Binding](https://developer.android.com/topic/libraries/data-binding) - support library that allows binding of UI components in  layouts to data sources, binds character details and search results to UI
+  - [Data Binding](https://developer.android.com/topic/libraries/data-binding) - support library that allows binding of UI components in  layouts to data sources, binds search results to UI
   - [Room](https://developer.android.com/training/data-storage/room) - Provides abstraction layer over SQLite used for cache
   - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) used for paging
 - [Retrofit](https://square.github.io/retrofit/) - Type-safe HTTP client and supports coroutines out of the box.  Used for the network calls.
