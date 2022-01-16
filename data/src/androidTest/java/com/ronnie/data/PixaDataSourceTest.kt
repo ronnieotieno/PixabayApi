@@ -20,6 +20,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations.initMocks
+import org.mockito.MockitoAnnotations.openMocks
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.InputStream
 
@@ -35,7 +36,7 @@ class PixaDataSourceTest {
 
     @Before
     fun setup() {
-        initMocks(this)
+        openMocks(this)
         context = InstrumentationRegistry.getInstrumentation().targetContext
 
         val jsonStream: InputStream = context.resources.assets.open("response.json")

@@ -17,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,9 +45,6 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
     private val viewModel: MainViewModel by activityViewModels()
     private var gridLayoutSpan = 2
     private var isInitiated = false
-
-    @Inject
-    lateinit var api: PixaBayApi
     private var job: Job? = null
 
     @Inject

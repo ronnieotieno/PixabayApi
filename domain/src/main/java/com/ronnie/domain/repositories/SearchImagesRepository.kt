@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface SearchImagesRepository {
     @ExperimentalPagingApi
     fun searchImages(searchString: String): Flow<PagingData<Image>>
+
 }
