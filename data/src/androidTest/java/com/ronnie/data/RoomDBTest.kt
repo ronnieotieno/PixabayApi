@@ -12,7 +12,6 @@ import com.ronnie.domain.models.ImageResponse
 import com.ronnie.domain.models.RemoteKey
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -30,7 +29,7 @@ class RoomDBTest {
     private val gson = Gson()
 
     @Before
-    fun setUp(){
+    fun setUp() {
 
         context = InstrumentationRegistry.getInstrumentation().targetContext
         db = Room.inMemoryDatabaseBuilder(context, PixaBayRoomDb::class.java).build()
@@ -46,34 +45,36 @@ class RoomDBTest {
         imageDao = db.imageDao()
         remoteKeyDao = db.remoteKeyDao()
 
-        val keys =  images.map {
-            RemoteKey(0,it.id,1,2)
+        val keys = images.map {
+            RemoteKey(0, it.id, 1, 2)
         }
 
         runBlocking {
             db.withTransaction {
-              imageDao.insertAll(images)
-              remoteKeyDao.insertAll(keys)
+                imageDao.insertAll(images)
+                remoteKeyDao.insertAll(keys)
             }
         }
     }
 
     @After
-    fun clear(){
+    fun clear() {
         db.clearAllTables()
         db.close()
     }
 
     @Test
-    fun return_true_number_keys_equal_images() = runBlocking{
+    fun return_true_number_keys_equal_images() = runBlocking {
         assertThat(
-            imageDao.getAll().size,CoreMatchers.equalTo(
-                remoteKeyDao.getAll().size))
+            imageDao.getAll().size, CoreMatchers.equalTo(
+                remoteKeyDao.getAll().size
+            )
+        )
     }
 
     @Test
-    fun return_true_if_search_term_is_fruits() = runBlocking{
-       val result =  imageDao.getAll()[Random(0).nextInt(19)].searchTerm == "fruits"
+    fun return_true_if_search_term_is_fruits() = runBlocking {
+        val result = imageDao.getAll()[Random(0).nextInt(19)].searchTerm == "fruits"
         assertThat(result, CoreMatchers.equalTo(true))
     }
 }

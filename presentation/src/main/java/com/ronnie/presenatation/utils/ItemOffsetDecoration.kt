@@ -1,11 +1,11 @@
 package com.ronnie.presenatation.utils
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import androidx.annotation.DimenRes
 import android.graphics.Rect
 import android.view.View
+import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class ItemOffsetDecoration(private val mItemOffset: Int) : ItemDecoration() {
     constructor(

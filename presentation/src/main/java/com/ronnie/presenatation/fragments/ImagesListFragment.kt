@@ -17,11 +17,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ronnie.data.api.PixaBayApi
 import com.ronnie.domain.models.Image
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.adapters.ImagesAdapter

@@ -46,7 +46,7 @@ dependencies {
 
 	implementation project(':commons')
 
-    //dagger hilt
+	//dagger hilt
 	implementation "com.google.dagger:hilt-android:$hiltVersion"
 	kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 	kapt "androidx.hilt:hilt-compiler:$hiltCompiler"

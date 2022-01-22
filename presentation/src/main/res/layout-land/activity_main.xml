@@ -11,8 +11,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="nav_host"
-            app:navGraph="@navigation/nav_graph"
-            app:defaultNavHost="true" />
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
     </FrameLayout>
 
 </layout>

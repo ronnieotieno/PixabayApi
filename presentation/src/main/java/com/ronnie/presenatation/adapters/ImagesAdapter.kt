@@ -6,9 +6,9 @@ import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronnie.domain.models.Image
+import com.ronnie.presenatation.databinding.ImageItemBinding
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
 import com.ronnie.presenatation.utils.NETWORK_VIEW_TYPE
-import com.ronnie.presenatation.databinding.ImageItemBinding
 import com.ronnie.presenatation.utils.imageDiffCallback
 
 class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :

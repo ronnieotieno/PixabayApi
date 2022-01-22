@@ -22,26 +22,26 @@ class PixaRemoteMediator(
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Image>): MediatorResult {
         val page: Int = when (loadType) {
-                LoadType.REFRESH -> {
-                    val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                    remoteKeys?.nextPage?.minus(1) ?: FIRST_PAGE
-                }
-                LoadType.PREPEND -> {
-                    val remoteKeys = getRemoteKeyForFirstItem(state)
-                    val prevKey = remoteKeys?.prevPage
-                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                    prevKey
-                }
-                LoadType.APPEND -> {
-                    val remoteKeys = getRemoteKeyForLastItem(state)
-                    val nextKey = remoteKeys?.nextPage
-                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                    nextKey
+            LoadType.REFRESH -> {
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                remoteKeys?.nextPage?.minus(1) ?: FIRST_PAGE
+            }
+            LoadType.PREPEND -> {
+                val remoteKeys = getRemoteKeyForFirstItem(state)
+                val prevKey = remoteKeys?.prevPage
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                prevKey
+            }
+            LoadType.APPEND -> {
+                val remoteKeys = getRemoteKeyForLastItem(state)
+                val nextKey = remoteKeys?.nextPage
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                nextKey
             }
         }
 
         try {
-            val response = pixaBayApi.searchImages(searchString,state.config.pageSize, page)
+            val response = pixaBayApi.searchImages(searchString, state.config.pageSize, page)
             val images = response.images
 
             images.map {
@@ -54,10 +54,10 @@ class PixaRemoteMediator(
                     db.imageDao().clearAll()
                     db.remoteKeyDao().clearRemoteKeys()
                 }
-               val prevKey = if (page == FIRST_PAGE) null else page - 1
-               val  nextKey = if (endOfPaginationReached) null else page + 1
+                val prevKey = if (page == FIRST_PAGE) null else page - 1
+                val nextKey = if (endOfPaginationReached) null else page + 1
 
-               val keys = images.map {
+                val keys = images.map {
                     RemoteKey(prevPage = prevKey, nextPage = nextKey, imageId = it.id)
                 }
                 db.remoteKeyDao().insertAll(keys)
@@ -83,6 +83,7 @@ class PixaRemoteMediator(
                 db.remoteKeyDao().remoteKeysImageId(image.id)
             }
     }
+
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Image>): RemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { image ->
@@ -95,7 +96,7 @@ class PixaRemoteMediator(
     ): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.let { image ->
-                    db.remoteKeyDao().remoteKeysImageId(image.id)
+                db.remoteKeyDao().remoteKeysImageId(image.id)
             }
         }
     }

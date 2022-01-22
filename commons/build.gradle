@@ -52,6 +52,7 @@ dependencies {
 def getKey() {
 	return project.findProperty("key")
 }
+
 def getBaseUrl() {
 	return project.findProperty("base_url")
 }

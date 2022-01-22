@@ -11,7 +11,7 @@ class SearchUseCase @Inject constructor(private val searchImagesRepository: Sear
     BaseUseCase<String, Flow<PagingData<Image>>> {
 
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun invoke(payload: String):  Flow<PagingData<Image>>{
+    override suspend fun invoke(payload: String): Flow<PagingData<Image>> {
         return searchImagesRepository.searchImages(payload)
     }
 

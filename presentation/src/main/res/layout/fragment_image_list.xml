@@ -2,180 +2,181 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainImageActivity">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:outlineProvider="bounds"
-            android:elevation="2dp"
-            android:id="@+id/searchContainer"
-            android:layout_marginStart="4dp"
-            android:background="@null"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:id="@+id/cancel_search"
-                android:layout_marginEnd="15dp"
-                android:visibility="gone"
-                android:contentDescription="@string/clear_search_desc"
-                android:background="?selectableItemBackground"
-                app:layout_constraintStart_toEndOf="@+id/searchView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/searchView"
-                app:layout_constraintBottom_toBottomOf="@+id/searchView"
-                android:src="@drawable/ic_close"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchView"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                app:layout_constraintEnd_toStartOf="@+id/cancel_search"
-                android:background="@null"
-                android:drawableTint="@android:color/tertiary_text_dark"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="5dp"
-                android:focusableInTouchMode="true"
-                android:hint="@string/search"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:textSize="17sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/item_margin"
-                    android:paddingEnd="@dimen/item_margin"
-                    android:paddingStart="@dimen/item_margin"
-                    android:paddingBottom="?actionBarSize"
-                    tools:ignore="UnusedAttribute"
-                    app:layout_constraintTop_toBottomOf="@+id/searchContainer"
-                    tools:listitem="@layout/image_item" />
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:id="@+id/progress"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainImageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchContainer"
         android:layout_width="match_parent"
-        android:id="@+id/empty_section"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@null"
+        android:elevation="2dp"
+        android:outlineProvider="bounds"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="150dp"
-            android:id="@+id/empty_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/oops"
-            android:layout_height="150dp" />
-
-        <TextView
+            android:id="@+id/cancel_search"
             android:layout_width="wrap_content"
-            android:text="@string/nothing"
-            android:id="@+id/title_empty"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/empty_image"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="?selectableItemBackground"
+            android:contentDescription="@string/clear_search_desc"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/searchView"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toEndOf="@+id/searchView"
+            app:layout_constraintTop_toTopOf="@id/searchView" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/no_result"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="5dp"
+            android:drawableTint="@android:color/tertiary_text_dark"
+            android:focusableInTouchMode="true"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:textSize="17sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@+id/title_empty"
+            app:layout_constraintEnd_toStartOf="@+id/cancel_search"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:id="@+id/error_section"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/item_margin"
+        android:paddingTop="@dimen/item_margin"
+        android:paddingEnd="@dimen/item_margin"
+        android:paddingBottom="?actionBarSize"
+        app:layout_constraintTop_toBottomOf="@+id/searchContainer"
+        tools:ignore="UnusedAttribute"
+        tools:listitem="@layout/image_item" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/empty_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/empty_image"
             android:layout_width="150dp"
-            android:id="@+id/error_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="150dp"
             android:src="@drawable/oops"
-            android:layout_height="150dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/title_empty"
             android:layout_width="wrap_content"
-            android:text="@string/your_connection_be_is_off"
-            android:textSize="20sp"
-            android:id="@+id/off"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing"
             android:textColor="@color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/error_image"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/empty_image" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="@string/error_loading_images"
-            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-medium"
-            android:id="@+id/error"
+            android:text="@string/no_result"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@+id/off"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_empty" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/error_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/error_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/oops"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_connection_be_is_off"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/error_image" />
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/error_loading_images"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/off" />
 
         <Button
-            android:layout_width ="wrap_content"
-            android:text="@string/try_again"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            app:cornerRadius="3dp"
             android:id="@+id/retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/teal_700"
-            app:layout_constraintTop_toBottomOf="@+id/error"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/try_again"
             android:textAllCaps="false"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/white"
+            app:cornerRadius="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/error" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

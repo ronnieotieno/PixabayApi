@@ -35,10 +35,10 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(cache:Cache): OkHttpClient {
+    fun providesOkHttpClient(cache: Cache): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(apiInterceptor)
-            .addInterceptor (cacheInterceptor)
+            .addInterceptor(cacheInterceptor)
             .cache(cache)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -57,11 +57,15 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesApi(retrofit: Retrofit):PixaBayApi= retrofit.create(PixaBayApi::class.java)
+    fun providesApi(retrofit: Retrofit): PixaBayApi = retrofit.create(PixaBayApi::class.java)
 
     @Provides
     @Singleton
-    fun providesRepository(pixaBayApi: PixaBayApi,pixaBayRoomDb: PixaBayRoomDb, @ApplicationContext context: Context):SearchImagesRepository= SearchImagesRepositoryImpl(pixaBayApi,pixaBayRoomDb,context )
+    fun providesRepository(
+        pixaBayApi: PixaBayApi,
+        pixaBayRoomDb: PixaBayRoomDb,
+        @ApplicationContext context: Context
+    ): SearchImagesRepository = SearchImagesRepositoryImpl(pixaBayApi, pixaBayRoomDb, context)
 
     @Provides
     @Singleton
@@ -70,15 +74,15 @@ object DataModule {
     }
 
     private val apiInterceptor = Interceptor { chain ->
-            val request = chain.request().newBuilder()
-            val originalHttpUrl = chain.request().url
-            val url = originalHttpUrl.newBuilder()
-                .addQueryParameter(KEY.first, KEY.second)
-                .addQueryParameter(IMAGE_TYPE.first, IMAGE_TYPE.second)
-                .build()
-            request.url(url)
-            chain.proceed(request.build())
-        }
+        val request = chain.request().newBuilder()
+        val originalHttpUrl = chain.request().url
+        val url = originalHttpUrl.newBuilder()
+            .addQueryParameter(KEY.first, KEY.second)
+            .addQueryParameter(IMAGE_TYPE.first, IMAGE_TYPE.second)
+            .build()
+        request.url(url)
+        chain.proceed(request.build())
+    }
 
 
     private val cacheInterceptor = Interceptor { chain ->
@@ -90,6 +94,7 @@ object DataModule {
             .header("Cache-Control", cacheControl.toString())
             .build()
     }
+
     @Provides
     @Singleton
     fun provideCache(app: Application): Cache {

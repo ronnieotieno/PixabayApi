@@ -5,6 +5,7 @@
     android:foreground="?android:selectableItemBackground">
 
     <data>
+
         <variable
             name="image"
             type="com.ronnie.domain.models.Image" />
@@ -16,46 +17,46 @@
 
         <ImageView
             android:id="@+id/imageView"
+            imageFromUrl="@{image.largeImageURL}"
             android:layout_width="0dp"
-            android:transitionName="@{image.largeImageURL}"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
-            imageFromUrl="@{image.largeImageURL}"
-            tools:src="@drawable/fruit"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:transitionName="@{image.largeImageURL}"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/fruit" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:padding="5dp"
+            android:layout_height="wrap_content"
             android:background="#BF000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="wrap_content">
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:text="@{image.user}"
-                android:fontFamily="sans-serif-condensed-medium"
                 android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@{image.user}"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="wrap_content" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/tags"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:ellipsize="marquee"
                 modelTags="@{image.tags}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fontFamily="sans-serif-condensed"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username"
-                android:layout_height="wrap_content"
-                android:singleLine="true" />
+                app:layout_constraintTop_toBottomOf="@+id/username" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

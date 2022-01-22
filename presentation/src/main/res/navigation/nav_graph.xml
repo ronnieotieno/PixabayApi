@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/imagesListFragment"
-        tools:layout="@layout/fragment_image_list"
         android:name="com.ronnie.presenatation.fragments.ImagesListFragment"
-        android:label="ImagesListFragment" >
+        android:label="ImagesListFragment"
+        tools:layout="@layout/fragment_image_list">
         <action
             android:id="@+id/to_imageDetailFragment"
-            app:exitAnim="@anim/slide_out_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/imageDetailFragment"
             app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:destination="@id/imageDetailFragment" />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/imageDetailFragment"
-        tools:layout="@layout/fragment_image_details"
         android:name="com.ronnie.presenatation.fragments.ImageDetailFragment"
-        android:label="ImageDetailFragment" />
+        android:label="ImageDetailFragment"
+        tools:layout="@layout/fragment_image_details" />
 </navigation>

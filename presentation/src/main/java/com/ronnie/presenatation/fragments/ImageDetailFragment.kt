@@ -15,8 +15,8 @@ import com.ronnie.presenatation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
-    private lateinit var binding:FragmentImageDetailsBinding
+class ImageDetailFragment : Fragment(R.layout.fragment_image_details) {
+    private lateinit var binding: FragmentImageDetailsBinding
     private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,16 +32,17 @@ class ImageDetailFragment: Fragment(R.layout.fragment_image_details) {
         }
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 
-    private fun loadTransition(){
+    private fun loadTransition() {
         val imageUri = viewModel.selectedImage?.largeImageURL
         binding.imageView.apply {
-           transitionName = imageUri
+            transitionName = imageUri
             Glide.with(requireContext())
                 .load(imageUri)
                 .into(this)

@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @Singleton
 abstract class PixaBayRoomDb : RoomDatabase() {
     abstract fun imageDao(): ImageDao
-    abstract fun remoteKeyDao():RemoteKeyDao
+    abstract fun remoteKeyDao(): RemoteKeyDao
 
     companion object {
         @Volatile

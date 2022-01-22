@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ConfirmDialogFragment @Inject constructor()  : DialogFragment(R.layout.fragment_confirm_dialog) {
+class ConfirmDialogFragment @Inject constructor() :
+    DialogFragment(R.layout.fragment_confirm_dialog) {
 
     private lateinit var binding: FragmentConfirmDialogBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

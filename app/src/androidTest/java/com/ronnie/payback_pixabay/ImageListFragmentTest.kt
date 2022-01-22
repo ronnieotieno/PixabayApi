@@ -7,10 +7,10 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ronnie.presenatation.MainImageActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
@@ -39,9 +39,10 @@ class ImageListFragmentTest {
      * Writes bogus search to query, waits for a moment then check if empty section is shown.
      */
     @Test
-    fun return_true_empty_section_is_showing()  {
+    fun return_true_empty_section_is_showing() {
         runBlocking {
-            onView(withId(R.id.searchView)).perform(replaceText("Anotherewsxrtdcyfguvhibjnkhugytfdr")).perform(pressImeActionButton())
+            onView(withId(R.id.searchView)).perform(replaceText("Anotherewsxrtdcyfguvhibjnkhugytfdr"))
+                .perform(pressImeActionButton())
             delay(5000)
             onView(withId(R.id.empty_section)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         }
@@ -52,7 +53,7 @@ class ImageListFragmentTest {
      * Test the visibility of the cancel search entry imageview if it becomes invisible when the searchview is empty
      */
     @Test
-    fun show_cancel_image_visibility(){
+    fun show_cancel_image_visibility() {
         runBlocking {
             onView(withId(R.id.searchView))
                 .perform(click())
