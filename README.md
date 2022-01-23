@@ -81,5 +81,6 @@ Libraries used in the whole application are:
 
 |<img src="screenshots/tab1.png">|
 |:----:|
+
 |<img src="screenshots/tab2.png"/>|
 |:----:|
