@@ -79,5 +79,7 @@ Libraries used in the whole application are:
 |<img src="screenshots/empty.png" width=250/>|<img src="screenshots/error.png" width=250/>|<img src="screenshots/error_paging.png" width=250/>|
 |:----:|:----:|:----:|
 
-|<img src="screenshots/home_land.png" width=400>|<img src="screenshots/detail_land.png" width=400/>|
-|:----:|:----:|
+|<img src="screenshots/tab1.png">|
+|:----:|
+|<img src="screenshots/tab2.png"/>|
+|:----:|

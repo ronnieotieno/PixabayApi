@@ -84,7 +84,8 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/likes"
-                app:layout_constraintTop_toBottomOf="@id/tags" />
+                app:layout_constraintTop_toBottomOf="@id/tags"
+                app:drawableStartCompat="@drawable/ic_comment" />
 
             <TextView
                 android:id="@+id/downloads"
