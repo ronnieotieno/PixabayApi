@@ -63,7 +63,7 @@ Libraries used in the whole application are:
 - [Gson](https://github.com/google/gson) - Used to convert JSON to Java/Kotlin classes for the
   Retrofit
 - [okhttp-logging-interceptor](https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md)
-  - logs HTTP request and response data.
+    - logs HTTP request and response data.
 - [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) - Library Support for
   coroutines
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for

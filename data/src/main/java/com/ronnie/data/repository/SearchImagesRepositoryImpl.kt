@@ -32,8 +32,7 @@ class SearchImagesRepositoryImpl @Inject constructor(
     }
     /**
      * Caching data with Remote mediator had issues and I wasn't able to solve, I resorted
-     * to using okhttp cache instead, I left the functions and classes intentionally for reviewers to see.
-     * If I am lucky to pass this I would like to mention the challenges I faced with the reviewers.
+     * to using okhttp cache instead
      */
 //    @OptIn(ExperimentalPagingApi::class)
 //    override fun searchImages(searchString: String): Flow<PagingData<Image>> {
