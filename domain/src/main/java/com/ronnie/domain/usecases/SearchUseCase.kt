@@ -7,11 +7,10 @@ import com.ronnie.domain.repositories.SearchImagesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class SearchUseCase @Inject constructor(private val searchImagesRepository: SearchImagesRepository) :
-    BaseUseCase<String, Flow<PagingData<Image>>> {
+class SearchUseCase @Inject constructor(private val searchImagesRepository: SearchImagesRepository) {
 
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun invoke(payload: String): Flow<PagingData<Image>> {
+    suspend fun invoke(payload: String): Flow<PagingData<Image>> {
         return searchImagesRepository.searchImages(payload)
     }
 
