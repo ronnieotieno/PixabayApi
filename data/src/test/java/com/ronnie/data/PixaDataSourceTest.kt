@@ -1,8 +1,6 @@
 package com.ronnie.data
 
-import android.content.Context
 import androidx.paging.PagingSource
-import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.datasource.PixaDataSource
@@ -20,11 +18,11 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations.openMocks
 import org.mockito.junit.MockitoJUnitRunner
+import java.io.FileInputStream
 import java.io.InputStream
 
 @RunWith(MockitoJUnitRunner::class)
 class PixaDataSourceTest {
-    lateinit var context: Context
 
     @Mock
     private lateinit var apiService: PixaBayApi
@@ -36,15 +34,14 @@ class PixaDataSourceTest {
     @Before
     fun setup() {
         openMocks(this)
-        context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val jsonStream: InputStream = context.resources.assets.open("response.json")
+        val jsonStream: InputStream = FileInputStream("src/main/assets/response.json")
         val jsonBytes: ByteArray = jsonStream.readBytes()
 
         responseImageResponse = gson.fromJson(String(jsonBytes), ImageResponse::class.java)
         imageList = responseImageResponse.images
 
-        pagingSource = PixaDataSource("fruits", apiService, context)
+        pagingSource = PixaDataSource("fruits", apiService)
 
     }
 

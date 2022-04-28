@@ -1,10 +1,8 @@
 package com.ronnie.data.datasource
 
-import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ronnie.commons.FIRST_PAGE
-import com.ronnie.data.R
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.domain.models.Image
 import java.io.IOException
@@ -15,7 +13,6 @@ import java.io.IOException
 class PixaDataSource(
     private val searchString: String,
     private val pixaBayApi: PixaBayApi,
-    private val context: Context
 ) :
     PagingSource<Int, Image>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Image> {
@@ -31,7 +28,7 @@ class PixaDataSource(
         } catch (t: Throwable) {
             var exception = t
             if (t is IOException) {
-                exception = IOException(context.getString(R.string.network_error))
+                exception = IOException("Please check your internet connection and try again")
             }
 
             LoadResult.Error(exception)

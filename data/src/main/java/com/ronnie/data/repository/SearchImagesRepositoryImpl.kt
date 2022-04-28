@@ -1,6 +1,5 @@
 package com.ronnie.data.repository
 
-import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -11,7 +10,6 @@ import com.ronnie.data.datasource.PixaDataSource
 import com.ronnie.data.db.PixaBayRoomDb
 import com.ronnie.domain.models.Image
 import com.ronnie.domain.repositories.SearchImagesRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -19,14 +17,13 @@ import javax.inject.Inject
 class SearchImagesRepositoryImpl @Inject constructor(
     private val pixaBayApi: PixaBayApi,
     private val pixaBayRoomDb: PixaBayRoomDb,
-    @ApplicationContext private val context: Context
 ) : SearchImagesRepository {
 
     override fun searchImages(searchString: String): Flow<PagingData<Image>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = PAGE_SIZE),
             pagingSourceFactory = {
-                PixaDataSource(searchString, pixaBayApi, context)
+                PixaDataSource(searchString, pixaBayApi)
             }
         ).flow
     }

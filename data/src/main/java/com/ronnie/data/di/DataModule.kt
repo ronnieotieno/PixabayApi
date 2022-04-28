@@ -65,7 +65,7 @@ object DataModule {
         pixaBayApi: PixaBayApi,
         pixaBayRoomDb: PixaBayRoomDb,
         @ApplicationContext context: Context
-    ): SearchImagesRepository = SearchImagesRepositoryImpl(pixaBayApi, pixaBayRoomDb, context)
+    ): SearchImagesRepository = SearchImagesRepositoryImpl(pixaBayApi, pixaBayRoomDb)
 
     @Provides
     @Singleton
