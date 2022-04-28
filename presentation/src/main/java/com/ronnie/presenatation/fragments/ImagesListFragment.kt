@@ -7,7 +7,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.core.view.WindowInsetsCompat.Type
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
@@ -25,7 +24,6 @@ import com.ronnie.presenatation.R
 import com.ronnie.presenatation.adapters.ImagesAdapter
 import com.ronnie.presenatation.adapters.LoadingStateAdapter
 import com.ronnie.presenatation.databinding.FragmentImageListBinding
-import com.ronnie.presenatation.dialogs.ConfirmDialogFragment
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
 import com.ronnie.presenatation.utils.ItemOffsetDecoration
 import com.ronnie.presenatation.utils.changeStatusBar
@@ -34,19 +32,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
     private lateinit var binding: FragmentImageListBinding
-    private val adapter = ImagesAdapter { image, imageView -> startNavigation(image, imageView) }
+    private val adapter = ImagesAdapter { image, imageView -> navigate(image, imageView) }
     private val viewModel: MainViewModel by activityViewModels()
     private var gridLayoutSpan = 2
     private var isInitiated = false
     private var job: Job? = null
-
-    @Inject
-    lateinit var confirmDialogFragment: ConfirmDialogFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -147,24 +141,15 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
         }
     }
 
-    private fun startNavigation(image: Image, imageView: ImageView) {
+    private fun navigate(image: Image, imageView: ImageView) {
         viewModel.selectedImage = image
         val extras = FragmentNavigatorExtras(
             imageView to image.largeImageURL
         )
-        viewModel.currentDirectionExtras = extras
-        showConfirmDialog(image.user)
+        val action = ImagesListFragmentDirections.toImageDetailFragment()
+        findNavController().navigate(action, extras)
+        changeStatusBarColorToBlack()
     }
-
-    fun navigate() {
-        val extras = viewModel.currentDirectionExtras
-        extras?.let {
-            val action = ImagesListFragmentDirections.toImageDetailFragment()
-            findNavController().navigate(action, extras)
-            changeStatusBarColorToBlack()
-        }
-    }
-
 
     private fun changeStatusBarColorToBlack() {
         requireActivity().apply {
@@ -186,15 +171,6 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
         requireActivity().apply {
             WindowInsetsControllerCompat(window, window.decorView).show(Type.ime())
         }
-    }
-
-    private fun showConfirmDialog(user: String) {
-        val bundle = bundleOf(
-            "user" to user
-        )
-        confirmDialogFragment.arguments = bundle
-        confirmDialogFragment.show(childFragmentManager, null)
-
     }
 
     override fun onResume() {

@@ -14,7 +14,7 @@ import com.ronnie.presenatation.fragments.ImagesListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+//Irrelevant
 @AndroidEntryPoint
 class ConfirmDialogFragment @Inject constructor() :
     DialogFragment(R.layout.fragment_confirm_dialog) {
@@ -41,7 +41,7 @@ class ConfirmDialogFragment @Inject constructor() :
                 dialog?.dismiss()
             }
             confirm.setOnClickListener {
-                (parentFragment as ImagesListFragment).navigate()
+               // (parentFragment as ImagesListFragment).navigate()
                 dialog?.dismiss()
             }
         }

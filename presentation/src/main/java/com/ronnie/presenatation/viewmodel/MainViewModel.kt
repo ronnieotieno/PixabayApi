@@ -15,7 +15,6 @@ class MainViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase
 ) : ViewModel() {
 
-    var currentDirectionExtras: FragmentNavigator.Extras? = null
     var selectedImage: Image? = null
     private val defaultSearch = DEFAULT_SEARCH
     var currentSearch = defaultSearch
