@@ -1,7 +1,6 @@
 package com.ronnie.presenatation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.paging.PagingData
 import com.ronnie.commons.DEFAULT_SEARCH
 import com.ronnie.domain.models.Image
