@@ -1,16 +1,11 @@
 package com.ronnie.data.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ronnie.commons.DB_NAME
 import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.dao.RemoteKeyDao
 import com.ronnie.data.models.ImagesEntity
-import com.ronnie.domain.models.Image
-import com.ronnie.domain.models.RemoteKey
-import javax.inject.Singleton
+import com.ronnie.data.models.RemoteKey
 
 /**
  * Room, architecture component build on top of Sqlite.

@@ -9,7 +9,7 @@ import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.dao.RemoteKeyDao
 import com.ronnie.data.db.PixaBayRoomDb
 import com.ronnie.domain.models.ImageResponse
-import com.ronnie.domain.models.RemoteKey
+import com.ronnie.data.models.RemoteKey
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat

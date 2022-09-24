@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ronnie.domain.models.RemoteKey
+import com.ronnie.data.models.RemoteKey
 
 /**
  * Used to query stored keys
@@ -12,7 +12,7 @@ import com.ronnie.domain.models.RemoteKey
 @Dao
 interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(remoteKey: List<RemoteKey>): List<Long>
+    suspend fun insertAll(remoteKey: List<RemoteKey>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(remoteKey: RemoteKey)
