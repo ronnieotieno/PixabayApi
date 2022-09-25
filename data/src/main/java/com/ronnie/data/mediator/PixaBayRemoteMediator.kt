@@ -70,7 +70,8 @@ class PixaBayRemoteMediator(
                     RemoteKey(imageId = it.id, prevPage = prevPage, nextPage = nextPage)
                 }
                 pixaBayRoomDb.remoteKeyDao().insertAll(keys)
-                pixaBayRoomDb.imageDao().insertAll(images.map { it.toImageEntity() })
+                pixaBayRoomDb.imageDao()
+                    .insertAll(images.map { it.toImageEntity(searchSting = query) })
             }
             return MediatorResult.Success(endOfPaginationReached = false)
 

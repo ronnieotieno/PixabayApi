@@ -1,7 +1,6 @@
-package com.ronnie.domain.models
+package com.ronnie.presenatation.model
 
-
-data class Image(
+data class ImagePresentation(
     val comments: Int,
     val downloads: Int,
     val id: Int,

@@ -8,7 +8,6 @@ import com.google.gson.Gson
 import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.dao.RemoteKeyDao
 import com.ronnie.data.db.PixaBayRoomDb
-import com.ronnie.domain.models.ImageResponse
 import com.ronnie.data.models.RemoteKey
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers

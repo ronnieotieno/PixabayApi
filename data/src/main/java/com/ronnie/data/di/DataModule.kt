@@ -34,11 +34,9 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(cache: Cache): OkHttpClient {
+    fun providesOkHttpClient(): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(apiInterceptor)
-            .addInterceptor(cacheInterceptor)
-            .cache(cache)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -63,9 +61,7 @@ object DataModule {
     fun providesRepository(
         pixaBayApi: PixaBayApi,
         pixaBayRoomDb: PixaBayRoomDb,
-        @ApplicationContext context: Context
     ): SearchImagesRepository = SearchImagesRepositoryImpl(pixaBayApi, pixaBayRoomDb)
-
 
 
     private val apiInterceptor = Interceptor { chain ->

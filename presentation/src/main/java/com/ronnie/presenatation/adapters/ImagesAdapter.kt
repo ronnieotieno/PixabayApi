@@ -7,17 +7,18 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ronnie.domain.models.Image
 import com.ronnie.presenatation.databinding.ImageItemBinding
+import com.ronnie.presenatation.model.ImagePresentation
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
 import com.ronnie.presenatation.utils.NETWORK_VIEW_TYPE
 import com.ronnie.presenatation.utils.imageDiffCallback
 
-class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
-    PagingDataAdapter<Image, ImagesAdapter.ImageViewHolder>(imageDiffCallback) {
+class ImagesAdapter(private val clicked: (ImagePresentation, ImageView) -> Unit) :
+    PagingDataAdapter<ImagePresentation, ImagesAdapter.ImageViewHolder>(imageDiffCallback) {
 
     inner class ImageViewHolder(private val binding: ImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(imagePassed: Image) {
+        fun bind(imagePassed: ImagePresentation) {
             binding.apply {
                 image = imagePassed
                 tags.isSelected = true

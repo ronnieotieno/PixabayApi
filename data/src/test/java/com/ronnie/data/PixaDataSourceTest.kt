@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.datasource.PixaDataSource
 import com.ronnie.domain.models.Image
-import com.ronnie.domain.models.ImageResponse
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat

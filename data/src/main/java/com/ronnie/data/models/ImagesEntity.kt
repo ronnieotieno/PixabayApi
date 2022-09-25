@@ -15,5 +15,5 @@ data class ImagesEntity(
     val user: String,
     val user_id: Int,
     val views: Int,
-    var searchTerm: String? = null
+    var searchTerm: String? = "cat"
 )

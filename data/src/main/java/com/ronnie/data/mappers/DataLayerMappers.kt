@@ -20,7 +20,7 @@ fun ImagesEntity.toDomainImage(): Image {
     )
 }
 
-fun ImageDto.toImageEntity(): ImagesEntity {
+fun ImageDto.toImageEntity(searchSting:String): ImagesEntity {
     return ImagesEntity(
         comments = comments,
         downloads = downloads,
@@ -31,7 +31,7 @@ fun ImageDto.toImageEntity(): ImagesEntity {
         user = user,
         user_id = user_id,
         views = views,
-        searchTerm = searchTerm
+        searchTerm = searchSting
     )
 }
 
