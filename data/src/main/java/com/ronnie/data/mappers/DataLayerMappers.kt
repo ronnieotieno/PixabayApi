@@ -1,6 +1,6 @@
 package com.ronnie.data.mappers
 
-import com.ronnie.data.models.ImagesEntity
+import com.ronnie.data.models.entities.ImagesEntity
 import com.ronnie.data.models.dtos.ImageDto
 import com.ronnie.domain.models.Image
 

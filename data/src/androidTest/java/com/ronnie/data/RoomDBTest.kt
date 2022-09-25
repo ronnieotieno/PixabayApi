@@ -8,7 +8,9 @@ import com.google.gson.Gson
 import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.dao.RemoteKeyDao
 import com.ronnie.data.db.PixaBayRoomDb
-import com.ronnie.data.models.RemoteKey
+import com.ronnie.data.mappers.toImageEntity
+import com.ronnie.data.models.dtos.ImageResponseDto
+import com.ronnie.data.models.entities.RemoteKey
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,7 +37,7 @@ class RoomDBTest {
         val jsonStream: InputStream = context.resources.assets.open("response.json")
         val jsonBytes: ByteArray = jsonStream.readBytes()
 
-        val images = gson.fromJson(String(jsonBytes), ImageResponse::class.java).images
+        val images = gson.fromJson(String(jsonBytes), ImageResponseDto::class.java).images
 
         images.map {
             it.searchTerm = "fruits"
@@ -45,12 +47,12 @@ class RoomDBTest {
         remoteKeyDao = db.remoteKeyDao()
 
         val keys = images.map {
-            RemoteKey(0, it.id, 1, 2)
+            RemoteKey(nextPage = 1, prevPage = 0, imageId = it.id)
         }
 
         runBlocking {
             db.withTransaction {
-                imageDao.insertAll(images)
+                imageDao.insertAll(images.map { it.toImageEntity("fruits") })
                 remoteKeyDao.insertAll(keys)
             }
         }

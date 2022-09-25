@@ -5,16 +5,16 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.ronnie.commons.DEFAULT_SEARCH
 import com.ronnie.commons.FIRST_PAGE
 import com.ronnie.commons.PAGED_DATA_PER_PAGE
 import com.ronnie.data.api.PixaBayApi
 import com.ronnie.data.db.PixaBayRoomDb
 import com.ronnie.data.mappers.toImageEntity
-import com.ronnie.data.models.ImagesEntity
-import com.ronnie.data.models.RemoteKey
+import com.ronnie.data.models.entities.ImagesEntity
+import com.ronnie.data.models.entities.RemoteKey
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class PixaBayRemoteMediator(
@@ -23,6 +23,14 @@ class PixaBayRemoteMediator(
     private val pixaBayRoomDb: PixaBayRoomDb
 
 ) : RemoteMediator<Int, ImagesEntity>() {
+
+    //when uncommented this function will prevent the remote mediator from refreshing in every intial launch of the app
+    //though this brings a bug such that the on launch the app will do things at once one,fetch data from room and secondly perform a network request so as to update
+    //data in room.When one is not connected to the internet,the error view and the loaded data from room will overlay each other
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
+    }
+
 
     override suspend fun load(
         loadType: LoadType,
@@ -36,17 +44,13 @@ class PixaBayRemoteMediator(
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKeys?.prevPage
-                if (prevKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
                 val nextKey = remoteKeys?.nextPage
-                if (nextKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                }
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
             }
         }

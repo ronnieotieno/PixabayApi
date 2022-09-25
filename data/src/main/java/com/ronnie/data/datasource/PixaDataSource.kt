@@ -1,12 +1,5 @@
 package com.ronnie.data.datasource
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import com.ronnie.commons.FIRST_PAGE
-import com.ronnie.data.api.PixaBayApi
-import com.ronnie.domain.models.Image
-import java.io.IOException
-
 /**
  * Paging 3 data source to query the pages based on recyclerview scroll state
  */

@@ -5,8 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ronnie.data.models.ImagesEntity
-import com.ronnie.domain.models.Image
+import com.ronnie.data.models.entities.ImagesEntity
 
 /**
  * Used to query cached Images

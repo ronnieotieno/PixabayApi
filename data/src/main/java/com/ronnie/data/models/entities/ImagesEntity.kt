@@ -1,4 +1,4 @@
-package com.ronnie.data.models
+package com.ronnie.data.models.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,5 +15,5 @@ data class ImagesEntity(
     val user: String,
     val user_id: Int,
     val views: Int,
-    var searchTerm: String? = "cat"
+    var searchTerm: String?
 )

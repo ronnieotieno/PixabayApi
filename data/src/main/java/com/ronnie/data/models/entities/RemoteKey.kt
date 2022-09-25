@@ -1,4 +1,4 @@
-package com.ronnie.data.models
+package com.ronnie.data.models.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

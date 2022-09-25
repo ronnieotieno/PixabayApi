@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ronnie.data.models.RemoteKey
+import com.ronnie.data.models.entities.RemoteKey
 
 /**
  * Used to query stored keys

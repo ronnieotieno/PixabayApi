@@ -1,7 +1,5 @@
 package com.ronnie.data.models.dtos
 
-import androidx.room.PrimaryKey
-
 data class ImageDto(
     val comments: Int,
     val downloads: Int,

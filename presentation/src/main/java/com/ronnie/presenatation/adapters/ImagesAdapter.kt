@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ronnie.domain.models.Image
 import com.ronnie.presenatation.databinding.ImageItemBinding
 import com.ronnie.presenatation.model.ImagePresentation
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
