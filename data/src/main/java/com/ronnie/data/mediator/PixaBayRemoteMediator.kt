@@ -31,7 +31,6 @@ class PixaBayRemoteMediator(
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
-
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, ImagesEntity>

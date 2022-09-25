@@ -14,7 +14,7 @@ import com.ronnie.data.models.entities.RemoteKey
 
 @Database(
     entities = [ImagesEntity::class, RemoteKey::class],
-    version = 1, exportSchema = false
+    version = 6, exportSchema = false
 )
 abstract class PixaBayRoomDb : RoomDatabase() {
     abstract fun imageDao(): ImageDao

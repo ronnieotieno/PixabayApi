@@ -20,7 +20,7 @@ class SearchImagesRepositoryImpl @Inject constructor(
     @ExperimentalPagingApi
     override fun searchImages(searchString: String): Flow<PagingData<Image>> {
         val pagingSourceFactory = { pixaBayRoomDb.imageDao().queryImages(searchString) }
-        Log.d("Repository", "searchImages: $searchString")
+
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,

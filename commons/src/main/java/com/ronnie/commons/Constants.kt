@@ -6,6 +6,5 @@ val IMAGE_TYPE = Pair("image_type", "photo")
 val KEY = Pair("key", BuildConfig.KEY)
 const val CACHE_NAME = "pixabay_cache"
 const val FIRST_PAGE = 1
-const val PAGE_SIZE = 25
-var DEFAULT_SEARCH = "fruits"
+const val DEFAULT_SEARCH = "fruits"
 const val PAGED_DATA_PER_PAGE = 50

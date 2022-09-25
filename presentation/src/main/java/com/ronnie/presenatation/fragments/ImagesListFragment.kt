@@ -91,7 +91,7 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
 
             binding.emptySection.isVisible =
                 state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-            binding.errorSection.isVisible = state.refresh is LoadState.Error
+            binding.errorSection.isVisible = state.refresh is LoadState.Error && adapter.snapshot().isEmpty()
 
         }
     }

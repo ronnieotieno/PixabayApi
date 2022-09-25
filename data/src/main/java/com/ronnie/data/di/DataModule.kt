@@ -75,27 +75,6 @@ object DataModule {
         chain.proceed(request.build())
     }
 
-
-    private val cacheInterceptor = Interceptor { chain ->
-        val response: Response = chain.proceed(chain.request())
-        val cacheControl = CacheControl.Builder()
-            .maxAge(30, TimeUnit.DAYS)
-            .build()
-        response.newBuilder()
-            .header("Cache-Control", cacheControl.toString())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideCache(app: Application): Cache {
-        return Cache(
-            File(app.applicationContext.cacheDir, CACHE_NAME),
-            10485760L
-        )
-    }
-
-
     @Singleton
     @Provides
     fun providesPixaBayRoomDb(@ApplicationContext appContext: Context): PixaBayRoomDb {

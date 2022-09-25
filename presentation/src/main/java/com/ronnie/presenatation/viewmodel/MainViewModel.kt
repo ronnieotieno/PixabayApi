@@ -30,7 +30,9 @@ class MainViewModel @Inject constructor(
             paginatedData.map { image ->
                 image.toImagePresentation()
             }
-            paginatedData.map { it.toImagePresentation() }
+            paginatedData.map { data ->
+                data.toImagePresentation()
+            }
 
         }.cachedIn(viewModelScope)
     }
