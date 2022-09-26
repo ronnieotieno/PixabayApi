@@ -10,8 +10,7 @@ import javax.inject.Inject
 class SearchUseCase @Inject constructor(private val searchImagesRepository: SearchImagesRepository) {
 
     @OptIn(ExperimentalPagingApi::class)
-    suspend fun invoke(payload: String): Flow<PagingData<Image>> {
+   operator fun invoke(payload: String): Flow<PagingData<Image>> {
         return searchImagesRepository.searchImages(payload)
     }
-
 }

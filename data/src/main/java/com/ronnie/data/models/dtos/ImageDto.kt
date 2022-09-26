@@ -1,7 +1,6 @@
-package com.ronnie.domain.models
+package com.ronnie.data.models.dtos
 
-
-data class Image(
+data class ImageDto(
     val comments: Int,
     val downloads: Int,
     val id: Int,

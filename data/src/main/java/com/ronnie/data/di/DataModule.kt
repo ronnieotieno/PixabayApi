@@ -2,12 +2,11 @@ package com.ronnie.data.di
 
 import android.app.Application
 import android.content.Context
-import com.ronnie.commons.BASE_URL
-import com.ronnie.commons.CACHE_NAME
-import com.ronnie.commons.IMAGE_TYPE
-import com.ronnie.commons.KEY
+import androidx.room.Room
+import com.ronnie.commons.*
 import com.ronnie.data.BuildConfig
 import com.ronnie.data.api.PixaBayApi
+import com.ronnie.data.dao.ImageDao
 import com.ronnie.data.db.PixaBayRoomDb
 import com.ronnie.data.repository.SearchImagesRepositoryImpl
 import com.ronnie.domain.repositories.SearchImagesRepository
@@ -35,11 +34,9 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(cache: Cache): OkHttpClient {
+    fun providesOkHttpClient(): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(apiInterceptor)
-            .addInterceptor(cacheInterceptor)
-            .cache(cache)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -64,14 +61,8 @@ object DataModule {
     fun providesRepository(
         pixaBayApi: PixaBayApi,
         pixaBayRoomDb: PixaBayRoomDb,
-        @ApplicationContext context: Context
     ): SearchImagesRepository = SearchImagesRepositoryImpl(pixaBayApi, pixaBayRoomDb)
 
-    @Provides
-    @Singleton
-    fun providesDB(@ApplicationContext appContext: Context): PixaBayRoomDb {
-        return PixaBayRoomDb.invoke(appContext)
-    }
 
     private val apiInterceptor = Interceptor { chain ->
         val request = chain.request().newBuilder()
@@ -84,24 +75,22 @@ object DataModule {
         chain.proceed(request.build())
     }
 
-
-    private val cacheInterceptor = Interceptor { chain ->
-        val response: Response = chain.proceed(chain.request())
-        val cacheControl = CacheControl.Builder()
-            .maxAge(30, TimeUnit.DAYS)
-            .build()
-        response.newBuilder()
-            .header("Cache-Control", cacheControl.toString())
-            .build()
-    }
-
-    @Provides
     @Singleton
-    fun provideCache(app: Application): Cache {
-        return Cache(
-            File(app.applicationContext.cacheDir, CACHE_NAME),
-            10485760L
-        )
+    @Provides
+    fun providesPixaBayRoomDb(@ApplicationContext appContext: Context): PixaBayRoomDb {
+        return Room.databaseBuilder(
+            appContext,
+            PixaBayRoomDb::class.java,
+            DB_NAME
+        ).fallbackToDestructiveMigration().build()
     }
+
+
+    @Singleton
+    @Provides
+    fun providesImageDao(pixaBayRoomDb: PixaBayRoomDb): ImageDao {
+        return pixaBayRoomDb.imageDao()
+    }
+
 
 }

@@ -1,10 +1,10 @@
-package com.ronnie.domain.models
+package com.ronnie.data.models.dtos
 
 import com.google.gson.annotations.SerializedName
 
-data class ImageResponse(
+class ImageResponseDto(
     @SerializedName("hits")
-    val images: List<Image>,
+    val images: List<ImageDto>,
     val total: Int,
     val totalHits: Int
 )

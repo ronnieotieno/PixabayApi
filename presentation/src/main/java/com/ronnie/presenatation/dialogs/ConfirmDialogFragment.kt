@@ -10,7 +10,6 @@ import androidx.core.text.bold
 import androidx.fragment.app.DialogFragment
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.databinding.FragmentConfirmDialogBinding
-import com.ronnie.presenatation.fragments.ImagesListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

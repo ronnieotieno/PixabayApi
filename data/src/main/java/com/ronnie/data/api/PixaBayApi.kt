@@ -1,6 +1,6 @@
 package com.ronnie.data.api
 
-import com.ronnie.domain.models.ImageResponse
+import com.ronnie.data.models.dtos.ImageResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,5 +11,5 @@ interface PixaBayApi {
         @Query("q") searchString: String? = null,
         @Query("per_page") per_page: Int? = null,
         @Query("page") page: Int? = null,
-    ): ImageResponse
+    ): ImageResponseDto
 }

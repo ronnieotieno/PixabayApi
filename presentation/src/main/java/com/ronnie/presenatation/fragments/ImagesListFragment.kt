@@ -3,6 +3,7 @@ package com.ronnie.presenatation.fragments
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
@@ -18,12 +19,13 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ronnie.domain.models.Image
 import com.ronnie.presenatation.R
 import com.ronnie.presenatation.adapters.ImagesAdapter
 import com.ronnie.presenatation.adapters.LoadingStateAdapter
 import com.ronnie.presenatation.databinding.FragmentImageListBinding
+import com.ronnie.presenatation.model.ImagePresentation
 import com.ronnie.presenatation.utils.IMAGE_VIEW_TYPE
 import com.ronnie.presenatation.utils.ItemOffsetDecoration
 import com.ronnie.presenatation.utils.changeStatusBar
@@ -89,7 +91,7 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
 
             binding.emptySection.isVisible =
                 state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-            binding.errorSection.isVisible = state.refresh is LoadState.Error
+            binding.errorSection.isVisible = state.refresh is LoadState.Error && adapter.snapshot().isEmpty()
 
         }
     }
@@ -107,10 +109,12 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
         job?.cancel()
         job = viewLifecycleOwner.lifecycleScope.launch {
             if (isUserInitiated) adapter.submitData(PagingData.empty())
-            viewModel.searchImages(searchString).collectLatest {
-                adapter.submitData(it)
+            viewModel.searchImages(searchString).collectLatest { pagingData ->
+                adapter.submitData(pagingData)
             }
         }
+
+
     }
 
     private fun setSearchViewListener() {
@@ -141,7 +145,7 @@ class ImagesListFragment : Fragment(R.layout.fragment_image_list) {
         }
     }
 
-    private fun navigate(image: Image, imageView: ImageView) {
+    private fun navigate(image: ImagePresentation, imageView: ImageView) {
         viewModel.selectedImage = image
         val extras = FragmentNavigatorExtras(
             imageView to image.largeImageURL
